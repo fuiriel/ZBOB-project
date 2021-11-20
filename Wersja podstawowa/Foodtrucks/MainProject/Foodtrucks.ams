@@ -9,16 +9,26 @@ Model Main_Foodtrucks {
 		Text: "funkcja celu - maksymalizacja zysków ze sprzedaży posiłków";
 		Type: Automatic;
 	}
-	Parameter MaxVisited {
-		Text: "Maksymaln";
-		Definition: 12 / PlaceTime;
+	Set Places {
+		SubsetOf: Nodes;
+		Text: "Możliwe punkty postoju foodtrucka";
+		Index: j2;
+		Definition: {
+			{j} - 'P';
+		}
+	}
+	Set Nodes {
+		Index: i, j;
+		Definition: data { P,A,B,C,D,E,F,G,H,I };
+	}
+	Set Vehicles {
+		Text: "Pojazdy";
+		Index: k;
+		Definition: data { 1, 2, 3 };
 	}
 	Parameter PlaceTime {
 		Text: "Czas spędzany w jednym punkcie [h]";
 		Definition: 2;
-	}
-	Parameter Vehicles {
-		Definition: 3;
 	}
 	Parameter FuelPrice {
 		Text: "cena benzyny [zł/l]";
@@ -27,11 +37,6 @@ Model Main_Foodtrucks {
 	Parameter MealPrice {
 		Text: "cena posiłku [zł]";
 		Definition: 15;
-	}
-	Set Places {
-		Text: "Możliwe punkty postoju foodtrucka";
-		Index: i, j;
-		Definition: data { A,B,C,D,E,F,G,H,I };
 	}
 	Parameter Distances {
 		IndexDomain: (i,j);
@@ -59,62 +64,85 @@ Model Main_Foodtrucks {
 	Parameter Incidences {
 		IndexDomain: (i,j);
 		Text: "macierz incydencji";
+		Range: binary;
 		Definition: {
 			data 
-			{ ( A, A ) : 1,  ( A, B ) : 1,  ( A, E ) : 1,  ( A, F ) : 1,  ( A, G ) : 1,  ( B, A ) : 1,  ( B, B ) : 1,  ( B, C ) : 1,
-			  ( B, D ) : 1,  ( B, E ) : 1,  ( B, F ) : 1,  ( B, G ) : 1,  ( C, A ) : 1,  ( C, B ) : 1,  ( C, C ) : 1,  ( C, D ) : 1,
-			  ( D, A ) : 1,  ( D, B ) : 1,  ( D, C ) : 1,  ( D, D ) : 1,  ( D, E ) : 1,  ( E, A ) : 1,  ( E, B ) : 1,  ( E, D ) : 1,
-			  ( E, E ) : 1,  ( E, F ) : 1,  ( E, G ) : 1,  ( E, H ) : 1,  ( E, I ) : 1,  ( F, A ) : 1,  ( F, B ) : 1,  ( F, E ) : 1,
-			  ( F, F ) : 1,  ( F, G ) : 1,  ( G, A ) : 1,  ( G, B ) : 1,  ( G, E ) : 1,  ( G, F ) : 1,  ( G, G ) : 1,  ( G, H ) : 1,
-			  ( G, I ) : 1,  ( H, E ) : 1,  ( H, G ) : 1,  ( H, I ) : 1,  ( I, E ) : 1,  ( I, G ) : 1,  ( I, H ) : 1,  ( I, I ) : 1 }
+			{ ( P, A ) : 1,  ( P, B ) : 1,  ( P, C ) : 1,  ( P, D ) : 1,  ( P, E ) : 1,  ( P, F ) : 1,  ( P, G ) : 1,  ( P, H ) : 1,
+			  ( P, I ) : 1,  ( A, P ) : 1,  ( A, B ) : 1,  ( A, E ) : 1,  ( A, F ) : 1,  ( A, G ) : 1,  ( B, P ) : 1,  ( B, A ) : 1,
+			  ( B, C ) : 1,  ( B, D ) : 1,  ( B, E ) : 1,  ( B, F ) : 1,  ( B, G ) : 1,  ( C, P ) : 1,  ( C, A ) : 1,  ( C, B ) : 1,
+			  ( C, D ) : 1,  ( D, P ) : 1,  ( D, A ) : 1,  ( D, B ) : 1,  ( D, C ) : 1,  ( D, E ) : 1,  ( E, P ) : 1,  ( E, A ) : 1,
+			  ( E, B ) : 1,  ( E, D ) : 1,  ( E, F ) : 1,  ( E, G ) : 1,  ( E, H ) : 1,  ( E, I ) : 1,  ( F, P ) : 1,  ( F, A ) : 1,
+			  ( F, B ) : 1,  ( F, E ) : 1,  ( F, G ) : 1,  ( G, P ) : 1,  ( G, A ) : 1,  ( G, B ) : 1,  ( G, E ) : 1,  ( G, F ) : 1,
+			  ( G, H ) : 1,  ( G, I ) : 1,  ( H, P ) : 1,  ( H, E ) : 1,  ( H, G ) : 1,  ( H, I ) : 1,  ( I, P ) : 1,  ( I, E ) : 1,
+			  ( I, G ) : 1,  ( I, H ) : 1 }
 		}
+		Comment: "Po ukośnej są 0, bo nie może być podróży miedzy sobą,";
 	}
 	Parameter Profits {
 		IndexDomain: i;
 		Text: "zapotrzebowanie na ilość posiłków w i-tym punkcie [ilość/h]";
 		Definition: data { A : 487,  B : 937,  C : 813,  D : 565,  E : 308,  F : 758,  G : 512,  H : 769,  I : 806 };
 	}
-	Variable StartingPlaces {
-		IndexDomain: j;
-		Text: "wartość określająca, od jakich punktów należy zacząć trasę foodtrucka";
-		Range: binary;
-	}
 	Variable Routes {
-		IndexDomain: (i,j);
+		IndexDomain: (i,j,k);
 		Text: "informacja, czy przejechano z punktu i do punktu j";
 		Range: binary;
 	}
 	Variable TotalCost {
 		Text: "wartość funkcji celu";
 		Range: free;
-		Definition: sum[i, MealPrice * Profits(i) * 2 * sum[j, Routes(i,j)]] - sum[(i,j), Routes(i,j) * Distances(i,j) * FuelPrice * Combustion];
-	}
-	Constraint FuelConstraint {
-		Text: "Ograniczenie dotyczące benzyny - ilość zużytej benzyny nie może być większa niż pojemność baku";
-		Definition: 0 <= sum[(i,j), Routes(i,j) *Distances(i,j) * Combustion] <= 100 * Vehicles;
-	}
-	Constraint MealConstraint {
-		Text: "Ograniczenie dotyczące pojemności foodtrucka - ilość sprzedanych danego dnia posiłków musi być mniejsze bądź równe od ilości posiłków, które może zagwarantować foodtruck";
-		Definition: 0 <= sum[i, Profits(i) * 2 * sum[j, Routes(i,j)]] <= 5000*Vehicles;
-	}
-	Constraint StartingPointsConstraint {
-		Text: "Ograniczenie na liczbę pojazdów i punktów, od których rozpoczynana jest trasa foodtrucka - punktów startowych nie może być więcej niż pojazdów";
-		Definition: sum[j, StartingPlaces(j)] <= Vehicles;
+		Definition: sum[i, MealPrice * Profits(i) * PlaceTime * sum[(j,k), Routes(i,j,k)]] - sum[(i,j,k), Routes(i,j,k) * Distances(i,j) * FuelPrice * Combustion];
+		Comment: "sum[i, MealPrice * Profits(i) * PlaceTime * sum[j, Routes(i,j)]] - sum[(i,j), Routes(i,j) * Distances(i,j) * FuelPrice * Combustion]";
 	}
 	Constraint IncidencesContraint {
-		IndexDomain: (i,j);
+		IndexDomain: (i,j,k);
 		Text: "Ograniczenie dotyczące informacji możliwego przemieszczenia między punktem i, a punktem j - maksymalnie możliwa wartość jest określona w macierzy incydencji Mij";
-		Definition: 0 <= Routes(i,j) <= Incidences(i,j);
+		Definition: 0 <= Routes(i,j,k) <= Incidences(i,j);
+		Comment: "0 <= Routes(i,j,k) <= Incidences(i,j)";
 	}
-	Constraint VehicleConstraint {
-		IndexDomain: i;
-		Text: "Ograniczenia na wykorzystanie liczby foodtracków względem możliwych do odwiedzenia punktów";
-		Definition: sum[j, Routes(i,j)] <= Vehicles * (MaxVisited - 1);
+	Constraint FuelConstraint {
+		IndexDomain: k;
+		Text: "Ograniczenie dotyczące benzyny - ilość zużytej benzyny nie może być większa niż pojemność baku";
+		Definition: 0 <= sum[(i,j), Routes(i,j,k) * Distances(i,j) * Combustion] <= 100;
+		Comment: "0 <= sum[(i,j), Routes(i,j) *Distances(i,j) * Combustion] <= 100 * NoOfVehicles";
+	}
+	Constraint MealConstraint {
+		IndexDomain: k;
+		Text: "Ograniczenie dotyczące pojemności foodtrucka - ilość sprzedanych danego dnia posiłków musi być mniejsze bądź równe od ilości posiłków, które może zagwarantować foodtruck";
+		Definition: 0 <= sum[i, Profits(i) * PlaceTime * sum[j, Routes(i,j,k)]] <= 5000;
+		Comment: "0 <= sum[i, Profits(i) * PlaceTime * sum[(j,k), Routes(i,j,k)]] <= 5000 *NoOfVehicles";
+	}
+	Constraint LeavedEnteredConstraint {
+		IndexDomain: (j,k);
+		Text: "Vehicle leaves node that it enters";
+		Definition: sum[i, Routes(i, j, k)] = sum[i, Routes(j, i, k)];
+		Comment: {
+			"1 <= sum[j, StartingPlaces(j)] <= Vehicles
+			DO wywalenia?"
+		}
+	}
+	Constraint LeavedDepotConstraint {
+		IndexDomain: k;
+		Text: "Ograniczenie na opuszczenie punktu początkowego P. Nie każdy pojazd musi wyjechać punktu P.";
+		Definition: 0 <= sum[j2, Routes('P', j2, k)] <= 1;
+		Comment: {
+			"1 <= sum[j, StartingPlaces(j)] <= Vehicles
+			DO wywalenia?"
+		}
+	}
+	Constraint MinLeavedDepotConstraint {
+		Text: "Ograniczenie na opuszczenie punktu początkowego P. Musi wyjechać minimum 1 pojazd z punktu P.";
+		Definition: 1 <= sum[(j2,k), Routes('P', j2, k)];
+		Comment: {
+			"1 <= sum[j, StartingPlaces(j)] <= Vehicles
+			TODO: może wyjechać maksymalnie tyle ile MaxVisited?"
+		}
 	}
 	Constraint VisitConstraint {
-		IndexDomain: j;
+		IndexDomain: j2;
 		Text: "Ograniczenie na maksymalnie możliwe przemieszczenie się z punktu i do punktu j - w ciągu dnia jeden punkt może być wybrany maksymalnie jeden raz";
-		Definition: 0 <= sum[i, Routes[i,j] + StartingPlaces(j)] <= 1;
+		Definition: 0 <= sum[(i,k), Routes(i,j2,k)] <= 1;
+		Comment: "0 <= sum[(i), Routes(i,j)] <= 1";
 	}
 	Procedure MainInitialization {
 		Comment: "Add initialization statements here that do NOT require any library being initialized already.";

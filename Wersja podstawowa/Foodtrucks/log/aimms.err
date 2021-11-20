@@ -1,11 +1,29 @@
-Warning at line 1 in user-defined function section "MainTermination".
-MainTermination does not contain any statements, in order to properly exit AIMMS, you should delete MainTermination (to employ the default AIMMS exit code) or add at least a return statement with a non-zero code.
-Semantic error at line 1 in the initial data of element parameter "webui::DefaultAuthorization", column 1.
-The value '7' is outside the range set "webui::AllAuthorizations" of element parameter "webui::DefaultAuthorization", see also the option "warning range violation".
-Warning at line 1 in user-defined function section "MainTermination".
-MainTermination does not contain any statements, in order to properly exit AIMMS, you should delete MainTermination (to employ the default AIMMS exit code) or add at least a return statement with a non-zero code.
-AIMMS interfacing error.
-The keyword "indices" is already declared.
+Domain violation at line 1 in the definition of constraint "IncidencesContraint", column 6.
+The number of arguments in the variable "Routes" is not correct.
+Input/output error at line 2 in user-defined function section "webui::PROIsInitialized".
+The user function library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\AimmsPROClient.dll cannot be found.
+Input/output error at line 2 in user-defined function section "webui::PROIsInitialized".
+The library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\AimmsPROClient.dll has not been loaded because: Error loading library : Parametr jest niepoprawny.
+Execution error at line 2 in user-defined function section "webui::PROIsInitialized".
+The dll for external procedure "pro::management::IsInitialized" has not been found.
+Input/output error at line 2 in user-defined function section "webui::PROIsInitialized".
+The user function library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\AimmsPROClient.dll cannot be found.
+Input/output error at line 2 in user-defined function section "webui::PROIsInitialized".
+The library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\AimmsPROClient.dll has not been loaded because: Error loading library : Parametr jest niepoprawny.
+Execution error at line 2 in user-defined function section "webui::PROIsInitialized".
+The dll for external procedure "pro::management::IsInitialized" has not been found.
+Input/output error at line 2 in user-defined function section "webui::PROIsInitialized".
+The user function library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\AimmsPROClient.dll cannot be found.
+Input/output error at line 2 in user-defined function section "webui::PROIsInitialized".
+The library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\AimmsPROClient.dll has not been loaded because: Error loading library : Parametr jest niepoprawny.
+Execution error at line 2 in user-defined function section "webui::PROIsInitialized".
+The dll for external procedure "pro::management::IsInitialized" has not been found.
+Input/output error at line 2 in user-defined function section "webui::PROIsInitialized".
+The user function library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\AimmsPROClient.dll cannot be found.
+Input/output error at line 2 in user-defined function section "webui::PROIsInitialized".
+The library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\AimmsPROClient.dll has not been loaded because: Error loading library : Parametr jest niepoprawny.
+Execution error at line 2 in user-defined function section "webui::PROIsInitialized".
+The dll for external procedure "pro::management::IsInitialized" has not been found.
 Input/output error at line 2 in user-defined function section "webui::PROIsInitialized".
 The user function library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\AimmsPROClient.dll cannot be found.
 Input/output error at line 2 in user-defined function section "webui::PROIsInitialized".
@@ -37,26 +55,25 @@ The library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\Aimm
 Execution error at line 2 in user-defined function section "webui::PROIsInitialized".
 The dll for external procedure "pro::management::IsInitialized" has not been found.
 A DataChangeMonitor with ID DataChangeMonitor001 does not exist.
-The mandatory attribute "definition" is missing from constraint "VisitConstraint".
-Semantic error at line 1 in the definition of constraint "VisitConstraint".
-The declared constraint "VisitConstraint" has not been defined.
-The mandatory attribute "definition" is missing from constraint "VisitConstraint".
-Semantic error at line 1 in the definition of constraint "VisitConstraint".
-The declared constraint "VisitConstraint" has not been defined.
-The mandatory attribute "definition" is missing from constraint "VisitConstraint".
-Semantic error at line 1 in the definition of constraint "VisitConstraint".
-The declared constraint "VisitConstraint" has not been defined.
-The mandatory attribute "definition" is missing from constraint "VisitConstraint".
-Semantic error at line 1 in the definition of constraint "VisitConstraint".
-The declared constraint "VisitConstraint" has not been defined.
-The mandatory attribute "definition" is missing from constraint "VisitConstraint".
-Semantic error at line 1 in the definition of constraint "VisitConstraint".
-The declared constraint "VisitConstraint" has not been defined.
-Semantic error at line 1 in the definition of constraint "VehicleConstraint", column 5.
-The index "j" already has a scope.
-Syntax error at line 2 in the definition of constraint "VisitConstraint", column 48.
-Unexpected end of the definition of constraint "VisitConstraint".
-Syntax error at line 1 in the index domain of constraint "IncidencesContraint", column 2.
+Domain violation at line 1 in the definition of constraint "IncidencesContraint", column 15.
+The scope of index "j" has not been specified.
+Domain violation at line 1 in the definition of constraint "IncidencesContraint", column 15.
+The scope of index "j" has not been specified.
+Domain violation at line 1 in the definition of constraint "IncidencesContraint", column 15.
+The scope of index "j" has not been specified.
+Domain violation at line 1 in the definition of constraint "IncidencesContraint", column 15.
+The scope of index "j" has not been specified.
+Domain violation at line 1 in the definition of constraint "IncidencesContraint", column 15.
+The scope of index "j" has not been specified.
+Domain violation at line 1 in the definition of constraint "IncidencesContraint", column 15.
+The scope of index "j" has not been specified.
+Domain violation at line 1 in the definition of constraint "IncidencesContraint", column 15.
+The scope of index "j" has not been specified.
+Semantic error at line 1 in the definition of constraint "MinLeavedDepotConstraint", column 11.
+The index "k" already has a scope.
+Syntax error at line 1 in the index domain of constraint "LeavedEntredConstraint", column 2.
 The symbol "," is not expected.
-Syntax error at line 1 in the definition of constraint "FuelConstraint", column 58.
-The parentheses '[' and ')' do not match.
+Syntax error at line 1 in the index domain of constraint "LeavedEntredConstraint", column 2.
+The symbol "," is not expected.
+Syntax error at line 1 in the index domain of constraint "LeavedEntredConstraint", column 2.
+The symbol "," is not expected.
