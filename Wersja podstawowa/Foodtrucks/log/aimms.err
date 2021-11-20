@@ -1,5 +1,21 @@
-Domain violation at line 1 in the definition of constraint "IncidencesContraint", column 6.
-The number of arguments in the variable "Routes" is not correct.
+Semantic error at line 1 in the range of element parameter "S", column 1.
+The mandatory attribute "range" is missing from element parameter "S".
+Semantic error at line 1 in the definition of set "Places", column 18.
+The range set of element parameter "Depot" has not been specified.
+Semantic error at line 1 in the definition of set "Places", column 18.
+The range set of element parameter "Depot" has not been specified.
+Input/output error at line 2 in user-defined function section "webui::PROIsInitialized".
+The user function library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\AimmsPROClient.dll cannot be found.
+Input/output error at line 2 in user-defined function section "webui::PROIsInitialized".
+The library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\AimmsPROClient.dll has not been loaded because: Error loading library : Parametr jest niepoprawny.
+Execution error at line 2 in user-defined function section "webui::PROIsInitialized".
+The dll for external procedure "pro::management::IsInitialized" has not been found.
+Input/output error at line 2 in user-defined function section "webui::PROIsInitialized".
+The user function library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\AimmsPROClient.dll cannot be found.
+Input/output error at line 2 in user-defined function section "webui::PROIsInitialized".
+The library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\AimmsPROClient.dll has not been loaded because: Error loading library : Parametr jest niepoprawny.
+Execution error at line 2 in user-defined function section "webui::PROIsInitialized".
+The dll for external procedure "pro::management::IsInitialized" has not been found.
 Input/output error at line 2 in user-defined function section "webui::PROIsInitialized".
 The user function library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\AimmsPROClient.dll cannot be found.
 Input/output error at line 2 in user-defined function section "webui::PROIsInitialized".
@@ -55,25 +71,12 @@ The library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\Aimm
 Execution error at line 2 in user-defined function section "webui::PROIsInitialized".
 The dll for external procedure "pro::management::IsInitialized" has not been found.
 A DataChangeMonitor with ID DataChangeMonitor001 does not exist.
-Domain violation at line 1 in the definition of constraint "IncidencesContraint", column 15.
-The scope of index "j" has not been specified.
-Domain violation at line 1 in the definition of constraint "IncidencesContraint", column 15.
-The scope of index "j" has not been specified.
-Domain violation at line 1 in the definition of constraint "IncidencesContraint", column 15.
-The scope of index "j" has not been specified.
-Domain violation at line 1 in the definition of constraint "IncidencesContraint", column 15.
-The scope of index "j" has not been specified.
-Domain violation at line 1 in the definition of constraint "IncidencesContraint", column 15.
-The scope of index "j" has not been specified.
-Domain violation at line 1 in the definition of constraint "IncidencesContraint", column 15.
-The scope of index "j" has not been specified.
-Domain violation at line 1 in the definition of constraint "IncidencesContraint", column 15.
-The scope of index "j" has not been specified.
 Semantic error at line 1 in the definition of constraint "MinLeavedDepotConstraint", column 11.
-The index "k" already has a scope.
-Syntax error at line 1 in the index domain of constraint "LeavedEntredConstraint", column 2.
-The symbol "," is not expected.
-Syntax error at line 1 in the index domain of constraint "LeavedEntredConstraint", column 2.
-The symbol "," is not expected.
-Syntax error at line 1 in the index domain of constraint "LeavedEntredConstraint", column 2.
-The symbol "," is not expected.
+The identifier "j2" has not been declared.
+Semantic error at line 1 in the definition of constraint "LeavedDepotConstraint".
+The mandatory attribute "definition" is missing from constraint "LeavedDepotConstraint".
+The mandatory attribute "definition" is missing from constraint "LeavedDepotConstraint".
+Domain violation at line 1 in the definition of variable "Visited", column 8.
+The number of arguments in the variable "Routes" is not correct.
+Domain violation at line 1 in the definition of variable "Visited", column 8.
+The number of arguments in the variable "Routes" is not correct.

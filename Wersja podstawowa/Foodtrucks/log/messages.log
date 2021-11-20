@@ -1,11 +1,8 @@
-﻿There is 82.148 Mb in use.
+﻿There is 82.930 Mb in use.
+The mandatory attribute "range" is missing from element parameter "S".
+The range set of element parameter "Depot" has not been specified.
+The range set of element parameter "Depot" has not been specified.
+The identifier "j2" has not been declared.
+The mandatory attribute "definition" is missing from constraint "LeavedDepotConstraint".
+The mandatory attribute "definition" is missing from constraint "LeavedDepotConstraint".
 The number of arguments in the variable "Routes" is not correct.
-The scope of index "j" has not been specified.
-The scope of index "j" has not been specified.
-The scope of index "j" has not been specified.
-The scope of index "j" has not been specified.
-The scope of index "j" has not been specified.
-The index "k" already has a scope.
-The symbol "," is not expected.
-The symbol "," is not expected.
-The symbol "," is not expected.

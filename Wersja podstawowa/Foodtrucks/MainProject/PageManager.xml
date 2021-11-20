@@ -2,5 +2,7 @@
 <PageManager>
 	<Page Name="All Data Pages" PageGUID="EC75C3C5-E1D7-4908-B588-EF6A7265D811">
 		<Page Name="[Data Page] Routes" PageGUID="9CD8137A-D808-47EF-9519-F3CACF1842D6" />
+		<Page Name="[Data Page] Distances" PageGUID="92AE5725-27F6-42C1-BBF9-BC7190172448" />
+		<Page Name="[Data Page] Visited" PageGUID="F38FF4AC-0871-42D2-8211-6320BA65F116" Marked="true" />
 	</Page>
 </PageManager>

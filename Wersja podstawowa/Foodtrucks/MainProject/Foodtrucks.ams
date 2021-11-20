@@ -1,6 +1,13 @@
 ## ams_version=1.0
 
 Model Main_Foodtrucks {
+	Parameter Visited {
+		IndexDomain: (j,k);
+		Text: "Odwiedzone punkty przez foodtrucki";
+		Range: binary;
+		Definition: sum[i, Routes(i,j,k)];
+		Comment: "Podsumowanie odwiedzonych punktów, parametr tylko do podglądu";
+	}
 	MathematicalProgram HighestCostPlan {
 		Objective: TotalCost;
 		Direction: maximize;
@@ -9,22 +16,29 @@ Model Main_Foodtrucks {
 		Text: "funkcja celu - maksymalizacja zysków ze sprzedaży posiłków";
 		Type: Automatic;
 	}
-	Set Places {
-		SubsetOf: Nodes;
-		Text: "Możliwe punkty postoju foodtrucka";
-		Index: j2;
-		Definition: {
-			{j} - 'P';
-		}
+	ElementParameter Depot {
+		Text: "Punkt startowy (miejsce z którego foodtruck rozpoczyna trasę)";
+		Range: PlacesAndDepot;
+		Definition: 'P';
 	}
-	Set Nodes {
+	Set Places {
+		SubsetOf: PlacesAndDepot;
+		Text: "Możliwe punkty postoju foodtrucka";
+		Index: p;
+		Definition: PlacesAndDepot - Depot;
+	}
+	Set PlacesAndDepot {
+		Text: "Możliwe punkty postoju foodtrucka wraz z punktem początkowym";
 		Index: i, j;
 		Definition: data { P,A,B,C,D,E,F,G,H,I };
 	}
 	Set Vehicles {
+		SubsetOf: Integers;
 		Text: "Pojazdy";
 		Index: k;
-		Definition: data { 1, 2, 3 };
+		Definition: {
+			{1 .. NumberOfVehicles }
+		}
 	}
 	Parameter PlaceTime {
 		Text: "Czas spędzany w jednym punkcie [h]";
@@ -37,6 +51,22 @@ Model Main_Foodtrucks {
 	Parameter MealPrice {
 		Text: "cena posiłku [zł]";
 		Definition: 15;
+	}
+	Parameter Combustion {
+		Text: "spalanie foodtrucka w l/h";
+		Definition: 12;
+	}
+	Parameter MaxCapacity {
+		Text: "Maksymalna ładowność foodtrucka (ilość posiłków do sprzedania)";
+		Definition: 5000;
+	}
+	Parameter MaxFuel {
+		Text: "Maksymalna ilość paliwa w baku foodtrucka";
+		Definition: 100;
+	}
+	Parameter NumberOfVehicles {
+		Text: "Liczba samochodów";
+		Definition: 3;
 	}
 	Parameter Distances {
 		IndexDomain: (i,j);
@@ -56,10 +86,6 @@ Model Main_Foodtrucks {
 			  ( H, E ) : 3.100,  ( H, F ) : 5.200,  ( H, G ) : 2.600,  ( H, I ) : 2.000,  ( I, A ) : 4.900,  ( I, B ) : 4.200,
 			  ( I, C ) : 9.300,  ( I, D ) : 4.200,  ( I, E ) : 4.100,  ( I, F ) : 5.300,  ( I, G ) : 3.700,  ( I, H ) : 2.000 }
 		}
-	}
-	Parameter Combustion {
-		Text: "spalanie foodtrucka w l/h";
-		Definition: 12;
 	}
 	Parameter Incidences {
 		IndexDomain: (i,j);
@@ -85,14 +111,18 @@ Model Main_Foodtrucks {
 	}
 	Variable Routes {
 		IndexDomain: (i,j,k);
-		Text: "informacja, czy przejechano z punktu i do punktu j";
+		Text: "Informacja, czy przejechano z punktu i do punktu j";
 		Range: binary;
 	}
+	Variable U {
+		IndexDomain: (i,k);
+		Range: free;
+		Comment: "Subtour elimination variable used in the Miller-Tucker-Zemlin constraints.";
+	}
 	Variable TotalCost {
-		Text: "wartość funkcji celu";
+		Text: "Wartość funkcji celu";
 		Range: free;
 		Definition: sum[i, MealPrice * Profits(i) * PlaceTime * sum[(j,k), Routes(i,j,k)]] - sum[(i,j,k), Routes(i,j,k) * Distances(i,j) * FuelPrice * Combustion];
-		Comment: "sum[i, MealPrice * Profits(i) * PlaceTime * sum[j, Routes(i,j)]] - sum[(i,j), Routes(i,j) * Distances(i,j) * FuelPrice * Combustion]";
 	}
 	Constraint IncidencesContraint {
 		IndexDomain: (i,j,k);
@@ -103,46 +133,48 @@ Model Main_Foodtrucks {
 	Constraint FuelConstraint {
 		IndexDomain: k;
 		Text: "Ograniczenie dotyczące benzyny - ilość zużytej benzyny nie może być większa niż pojemność baku";
-		Definition: 0 <= sum[(i,j), Routes(i,j,k) * Distances(i,j) * Combustion] <= 100;
+		Definition: 0 <= sum[(i,j), Routes(i,j,k) * Distances(i,j) * Combustion] <= MaxFuel;
 		Comment: "0 <= sum[(i,j), Routes(i,j) *Distances(i,j) * Combustion] <= 100 * NoOfVehicles";
 	}
 	Constraint MealConstraint {
 		IndexDomain: k;
 		Text: "Ograniczenie dotyczące pojemności foodtrucka - ilość sprzedanych danego dnia posiłków musi być mniejsze bądź równe od ilości posiłków, które może zagwarantować foodtruck";
-		Definition: 0 <= sum[i, Profits(i) * PlaceTime * sum[j, Routes(i,j,k)]] <= 5000;
+		Definition: 0 <= sum[i, Profits(i) * PlaceTime * sum[j, Routes(i,j,k)]] <= MaxCapacity;
 		Comment: "0 <= sum[i, Profits(i) * PlaceTime * sum[(j,k), Routes(i,j,k)]] <= 5000 *NoOfVehicles";
 	}
 	Constraint LeavedEnteredConstraint {
 		IndexDomain: (j,k);
 		Text: "Vehicle leaves node that it enters";
 		Definition: sum[i, Routes(i, j, k)] = sum[i, Routes(j, i, k)];
-		Comment: {
-			"1 <= sum[j, StartingPlaces(j)] <= Vehicles
-			DO wywalenia?"
-		}
 	}
 	Constraint LeavedDepotConstraint {
 		IndexDomain: k;
 		Text: "Ograniczenie na opuszczenie punktu początkowego P. Nie każdy pojazd musi wyjechać punktu P.";
-		Definition: 0 <= sum[j2, Routes('P', j2, k)] <= 1;
-		Comment: {
-			"1 <= sum[j, StartingPlaces(j)] <= Vehicles
-			DO wywalenia?"
-		}
+		Definition: 0 <= sum[p, Routes(Depot, p, k)] <= 1;
 	}
 	Constraint MinLeavedDepotConstraint {
 		Text: "Ograniczenie na opuszczenie punktu początkowego P. Musi wyjechać minimum 1 pojazd z punktu P.";
-		Definition: 1 <= sum[(j2,k), Routes('P', j2, k)];
+		Definition: 1 <= sum[(p,k), Routes(Depot, p, k)];
 		Comment: {
 			"1 <= sum[j, StartingPlaces(j)] <= Vehicles
 			TODO: może wyjechać maksymalnie tyle ile MaxVisited?"
 		}
 	}
 	Constraint VisitConstraint {
-		IndexDomain: j2;
+		IndexDomain: p;
 		Text: "Ograniczenie na maksymalnie możliwe przemieszczenie się z punktu i do punktu j - w ciągu dnia jeden punkt może być wybrany maksymalnie jeden raz";
-		Definition: 0 <= sum[(i,k), Routes(i,j2,k)] <= 1;
+		Definition: 0 <= sum[(i,k), Routes(i,p,k)] <= 1;
 		Comment: "0 <= sum[(i), Routes(i,j)] <= 1";
+	}
+	Constraint SubtourEliminationMKZ1 {
+		IndexDomain: (i,j,k) | i<>Depot and j<>Depot and i<>j;
+		Definition: U(i,k) - U(j,k) + MaxCapacity * Routes(i,j,k) <= MaxCapacity - Profits(j) * PlaceTime;
+		Comment: "Miller-Tucker-Zemlin Subtour elimination constraint (1.37).";
+	}
+	Constraint SubtourEliminationMKZ2 {
+		IndexDomain: (i,k) | i<>Depot;
+		Definition: Profits(i) * PlaceTime <= U(i,k) <= MaxCapacity;
+		Comment: "Miller-Tucker-Zemlin Subtour elimination constraint (1.38).";
 	}
 	Procedure MainInitialization {
 		Comment: "Add initialization statements here that do NOT require any library being initialized already.";
