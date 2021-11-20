@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<Project AimmsVersion="4.82.7.10 unicode x64" ProjectUUID="F5091E24-8CC9-460C-B7DE-20C84D69E25C">
+	<ModelFileName>Foodtrucks.ams</ModelFileName>
+	<AutoSaveAndBackup>
+		<DataBackup AtRegularInterval="true" EveryNMinutes="15" NumBackupsDatedToday="3" NumDaysBeforeToday="3" />
+	</AutoSaveAndBackup>
+</Project>
