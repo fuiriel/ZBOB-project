@@ -1,6 +1,9 @@
 ## ams_version=1.0
 
 Model Main_Foodtrucks {
+	Parameter MaxVisited {
+		Definition: 3;
+	}
 	Parameter Visited {
 		IndexDomain: (j,k);
 		Text: "Odwiedzone punkty przez foodtrucki";
@@ -175,6 +178,11 @@ Model Main_Foodtrucks {
 		IndexDomain: (i,k) | i<>Depot;
 		Definition: Profits(i) * PlaceTime <= U(i,k) <= MaxCapacity;
 		Comment: "Miller-Tucker-Zemlin Subtour elimination constraint (1.38).";
+	}
+	Constraint MaxVisitCoonstraint {
+		IndexDomain: k;
+		Definition: sum[(i,j), Routes(i,j,k)] <= MaxVisited;
+		Comment: "Foodtruck nie może odwiedzić więcej punktów niż określona wartość V.";
 	}
 	Procedure MainInitialization {
 		Comment: "Add initialization statements here that do NOT require any library being initialized already.";

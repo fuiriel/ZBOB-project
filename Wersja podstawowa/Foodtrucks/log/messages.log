@@ -6,3 +6,8 @@ The identifier "j2" has not been declared.
 The mandatory attribute "definition" is missing from constraint "LeavedDepotConstraint".
 The mandatory attribute "definition" is missing from constraint "LeavedDepotConstraint".
 The number of arguments in the variable "Routes" is not correct.
+The undeclared "MaxVisitsk" is not an index.
+The identifier "MaxVisitsk" has not been declared.
+The scope of index "k" has not been specified.
+The undeclared "MaxVisitsk" is not an index.
+The identifier "MaxVisitsk" has not been declared.
