@@ -1,7 +1,16 @@
 ## ams_version=1.0
 
 Model Main_Foodtrucks {
+	Parameter WorkTime {
+		Text: "Czas pracy foodtrucka [h]";
+		Definition: 8;
+	}
+	Parameter Velocity {
+		Text: "Prędkość pojazdu [km/h]";
+		Definition: 60;
+	}
 	Parameter MaxVisited {
+		Text: "Maksymalnie możliwa liczba odwiedzonych puntków przez 1 foodtrucka";
 		Definition: 3;
 	}
 	Parameter Visited {
@@ -181,8 +190,20 @@ Model Main_Foodtrucks {
 	}
 	Constraint MaxVisitCoonstraint {
 		IndexDomain: k;
-		Definition: sum[(i,j), Routes(i,j,k)] <= MaxVisited;
-		Comment: "Foodtruck nie może odwiedzić więcej punktów niż określona wartość V.";
+		Definition: sum[(i,p), Routes(i,p,k)] <= MaxVisited;
+		Comment: {
+			"Foodtruck nie może odwiedzić więcej punktów niż określona wartość V.
+			sum[(i,j), Routes(i,j,k)] <= MaxVisited"
+		}
+	}
+	Constraint TimeConstraint {
+		IndexDomain: k;
+		Text: "Ograniczenie na czas pracy pojazdu";
+		Definition: 1=1;
+		Comment: {
+			"duma pobytuu w punkcie + suma dojazdu
+			sum[(i,p), Routes(i,p,k)*PlaceTime] + sum[(i,j), Routes(i,j,k)*Distances(i,j)/Velocity] <= WorkTime"
+		}
 	}
 	Procedure MainInitialization {
 		Comment: "Add initialization statements here that do NOT require any library being initialized already.";
