@@ -1,14 +1,4 @@
-﻿There is 82.930 Mb in use.
-The mandatory attribute "range" is missing from element parameter "S".
-The range set of element parameter "Depot" has not been specified.
-The range set of element parameter "Depot" has not been specified.
-The identifier "j2" has not been declared.
-The mandatory attribute "definition" is missing from constraint "LeavedDepotConstraint".
-The mandatory attribute "definition" is missing from constraint "LeavedDepotConstraint".
-The number of arguments in the variable "Routes" is not correct.
-The undeclared "MaxVisitsk" is not an index.
-The identifier "MaxVisitsk" has not been declared.
-The scope of index "k" has not been specified.
-The undeclared "MaxVisitsk" is not an index.
-The identifier "MaxVisitsk" has not been declared.
-'index' is expected.
+﻿There is 87.578 Mb in use.
+Warning: The variable "Routes" is not initialized (default values are used).
+Warning at line 1 in the definition of parameter "Visited":
+The variable "Routes" is not initialized (default values are used).
