@@ -1,0 +1,265 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2021-11-21 14:31:44">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>F5091E24-8CC9-460C-B7DE-20C84D69E25C</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background RGB="#f7fbc8" />
+	<PageObject Type="Rectangle">
+		<Location top="120" left="66" bottom="738" right="534" />
+		<Shape>Open</Shape>
+		<FillColor RGB="#efefef" />
+		<LineColor RGB="#000000" />
+		<LineWidth>5</LineWidth>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="138" left="216" bottom="180" right="360" />
+		<StaticText>Input</StaticText>
+		<Alignment>Center</Alignment>
+		<Font GUID="944651F2-F035-4D34-8410-A871DD338E8B" Name="ArialNarrow14b" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="138" left="780" bottom="180" right="924" />
+		<StaticText>Output</StaticText>
+		<Alignment>Center</Alignment>
+		<Font GUID="944651F2-F035-4D34-8410-A871DD338E8B" Name="ArialNarrow14b" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Rectangle">
+		<Location top="120" left="618" bottom="738" right="1080" />
+		<Shape>Open</Shape>
+		<FillColor RGB="#ffffff" />
+		<LineColor RGB="#000000" />
+		<LineWidth>5</LineWidth>
+	</PageObject>
+	<PageObject Type="Network Object">
+		<Location top="198" left="636" bottom="666" right="1062" />
+		<TabOrder>1</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#c0c0c0" />
+		<HorizontalScrollbar>true</HorizontalScrollbar>
+		<VerticalScrollbar>true</VerticalScrollbar>
+		<AllowZoom>false</AllowZoom>
+		<EqualXYScale>false</EqualXYScale>
+		<ScrollControl>NavigationButtons</ScrollControl>
+		<VisibleArea>
+			<Left>XCoordMin</Left>
+			<Right>XCoordMax</Right>
+			<Top>YCoordMax</Top>
+			<Bottom>YCoordMin</Bottom>
+		</VisibleArea>
+		<TotalArea>
+			<Left>-60</Left>
+			<Right>60</Right>
+			<Top>60</Top>
+			<Bottom>-60</Bottom>
+		</TotalArea>
+		<Background>
+			<Background_Image_Source ID="101">"From File"</Background_Image_Source>
+			<Image_File_Name ID="200" LiteralFileName="true">"C:\Users\KSzym\Documents\Gitlab\ZBOP-project\Assets\warsaw-map.png"</Image_File_Name>
+			<Left ID="210">-60</Left>
+			<Right ID="211">60</Right>
+			<Top ID="212">60</Top>
+			<Bottom ID="213">-60</Bottom>
+		</Background>
+		<Node>
+			<Identifier>i</Identifier>
+			<XCoordinate>XCoordinate( i )</XCoordinate>
+			<YCoordinate>YCoordinate( i )</YCoordinate>
+			<NumberFormat Width="6" Decimals="2" />
+			<MaximumSize>8</MaximumSize>
+			<ScaleFactor>3</ScaleFactor>
+			<TextPosition>Right</TextPosition>
+			<TextShowWhat>ElementName</TextShowWhat>
+			<Size>100</Size>
+			<Shape>Circle</Shape>
+		</Node>
+		<Arc>
+			<Identifier>Routes( i, j, k )</Identifier>
+			<NumberFormat Width="6" Decimals="2" />
+			<MaximumSize>8</MaximumSize>
+			<ScaleFactor>3</ScaleFactor>
+			<TextPosition>Right</TextPosition>
+			<Color>Xcolor( k )</Color>
+			<Shape>Straight</Shape>
+			<FirstSegment>Horizontal</FirstSegment>
+			<ClickWhere>EntireArc</ClickWhere>
+		</Arc>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="678" left="636" bottom="720" right="1062" />
+		<TabOrder>2</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>TotalCost</Identifier>
+			<NumberFormat Width="30" Decimals="3" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="660" left="216" bottom="714" right="402" />
+		<TabOrder>3</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Run"</Title>
+		<BackgroundColor RGB="#ffff00" />
+		<ForegroundColor RGB="#008000" />
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<ActionSequence>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>MainExecution</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Table">
+		<Location top="198" left="84" bottom="720" right="198" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<RowIndentation>3</RowIndentation>
+		<ExplicitIdentifier>
+			<Identifier>Profits( p )</Identifier>
+			<FirstColumn>1</FirstColumn>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="198" left="216" bottom="240" right="516" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>MaxCapacity</Identifier>
+			<NumberFormat Width="5" Decimals="0" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="306" left="216" bottom="348" right="516" />
+		<TabOrder>12</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>Combustion</Identifier>
+			<NumberFormat Width="5" Decimals="2" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="252" left="216" bottom="294" right="516" />
+		<TabOrder>6</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>MaxFuel</Identifier>
+			<NumberFormat Width="4" Decimals="0" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="360" left="216" bottom="402" right="516" />
+		<TabOrder>7</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>FuelPrice</Identifier>
+			<NumberFormat Width="5" Decimals="2" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="414" left="216" bottom="456" right="516" />
+		<TabOrder>8</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>MaxVisited</Identifier>
+			<NumberFormat Width="5" Decimals="2" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="468" left="216" bottom="510" right="516" />
+		<TabOrder>9</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>MealPrice</Identifier>
+			<NumberFormat Width="5" Decimals="1" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="522" left="216" bottom="564" right="516" />
+		<TabOrder>10</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>PlaceTime</Identifier>
+			<NumberFormat Width="5" Decimals="2" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="576" left="216" bottom="618" right="516" />
+		<TabOrder>11</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>NumberOfVehicles</Identifier>
+			<UpdateOnChange>NumberOfVehicles</UpdateOnChange>
+			<NumberFormat Width="5" Decimals="2" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>XCoordMax</Symbol>
+			<Symbol>XCoordMin</Symbol>
+			<Symbol>YCoordMax</Symbol>
+			<Symbol>YCoordMin</Symbol>
+			<Symbol>Xcolor</Symbol>
+			<Symbol>XCoordinate</Symbol>
+			<Symbol>YCoordinate</Symbol>
+			<Symbol>MaxVisited</Symbol>
+			<Symbol>PlaceTime</Symbol>
+			<Symbol>FuelPrice</Symbol>
+			<Symbol>MealPrice</Symbol>
+			<Symbol>Combustion</Symbol>
+			<Symbol>MaxCapacity</Symbol>
+			<Symbol>MaxFuel</Symbol>
+			<Symbol>NumberOfVehicles</Symbol>
+			<Symbol>Profits</Symbol>
+			<Symbol>Routes</Symbol>
+			<Symbol>TotalCost</Symbol>
+			<Symbol>MainExecution</Symbol>
+			<Symbol>p</Symbol>
+			<Symbol>i</Symbol>
+			<Symbol>j</Symbol>
+			<Symbol>k</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>
