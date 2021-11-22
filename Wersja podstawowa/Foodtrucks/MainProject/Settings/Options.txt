@@ -14,4 +14,3 @@ use_UTC_forCaseAndStartEndDate 1
 * SNOPT 7.2
 * NETSOL
 * Environment
-Default_UI 0

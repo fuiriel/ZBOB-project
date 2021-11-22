@@ -1,17 +1,106 @@
 ## ams_version=1.0
 
 Model Main_Foodtrucks {
-	Parameter WorkTime {
-		Text: "Czas pracy foodtrucka [h]";
-		Definition: 8;
+	Section Page {
+		Procedure IncumbentCallback {
+			Body: {
+				RetrieveCurrentVariableValues( AllVariables );
+				
+				DetermineColors;
+				
+				PageRefreshAll;
+			}
+		}
+		Procedure DetermineColors {
+			Body: {
+				for (k) do
+					switch (k) do
+						1:
+							Xcolor(k) := 'red';
+						2:
+							Xcolor(k) := 'blue';
+						3:
+							Xcolor(k) := 'green';
+						4:
+							Xcolor(k) := 'yellow';
+						5:
+							Xcolor(k) := 'cyan';
+						6:
+							Xcolor(k) := 'magenta';
+						7:
+							Xcolor(k) := 'navy blue';
+						default:
+							Xcolor(k) := Element( AllColors, k );
+					endswitch;
+				endfor;
+			}
+		}
+		Parameter XCoordMax {
+			Definition: {
+				if ( max( i, XCoordinate(i) ) > 0 ) then
+					max( i, XCoordinate(i) ) * 1.08
+				else
+					max( i, XCoordinate(i) ) * 0.92
+				endif
+			}
+		}
+		Parameter XCoordMin {
+			Definition: {
+				if ( min( i, XCoordinate(i) ) > 0 ) then
+					min( i, XCoordinate(i) ) * 0.92
+				else
+					min( i, XCoordinate(i) ) * 1.08
+				endif
+			}
+		}
+		Parameter YCoordMax {
+			Definition: {
+				if ( max( i, YCoordinate(i) ) > 0 ) then
+					max( i, YCoordinate(i) ) * 1.08
+				else
+					max( i, YCoordinate(i) ) * 0.92
+				endif
+			}
+		}
+		Parameter YCoordMin {
+			Definition: {
+				if ( min( i, YCoordinate(i) ) > 0 ) then
+					min( i, YCoordinate(i) ) * 0.92
+				else
+					min( i, YCoordinate(i) ) * 1.08
+				endif
+			}
+		}
+		ElementParameter Xcolor {
+			IndexDomain: k;
+			Range: AllColors;
+		}
+	}
+	Parameter XCoordinate {
+		IndexDomain: (i);
+		InitialData: data { P : 18.002,  A : 8.074,  B : -8.808,  C : 14.155,  D : 5.767,  E : 30.000,  F : -8.000,  G : 13.000,  H : -7.759,  I : -10.000 };
+	}
+	Parameter YCoordinate {
+		IndexDomain: i;
+		InitialData: data { P : -18.000,  A : 24.217,  B : 9.383,  C : 9.282,  D : 8.904,  E : 5.000,  F : 20.731,  G : -15.000,  H : 2.277,  I : -7.000 };
 	}
 	Parameter Velocity {
 		Text: "Prędkość pojazdu [km/h]";
-		Definition: 60;
+		Range: integer;
+		Default: 60;
+	}
+	Parameter WorkTime {
+		Text: "Czas pracy foodtrucka [h]";
+		Range: integer;
+		Default: 8;
 	}
 	Parameter MaxVisited {
-		Text: "Maksymalnie możliwa liczba odwiedzonych puntków przez 1 foodtrucka";
-		Definition: 4;
+		Text: "Maks. liczba punktów";
+		Range: {
+			{1..maxint}
+		}
+		Default: 4;
+		Comment: "Maksymalnie możliwa liczba odwiedzonych puntków przez 1 foodtrucka";
 	}
 	Parameter Visited {
 		IndexDomain: (j,k);
@@ -53,32 +142,43 @@ Model Main_Foodtrucks {
 		}
 	}
 	Parameter PlaceTime {
-		Text: "Czas spędzany w jednym punkcie [h]";
-		Definition: 2;
+		Text: "Czas postoju [h]";
+		Range: nonnegative;
+		Default: 2;
 	}
 	Parameter FuelPrice {
-		Text: "cena benzyny [zł/l]";
-		Definition: 6;
+		Text: "Cena paliwa [zł/l]";
+		Range: nonnegative;
+		Default: 6;
 	}
 	Parameter MealPrice {
-		Text: "cena posiłku [zł]";
-		Definition: 15;
+		Text: "Cena posiłku [zł]";
+		Range: nonnegative;
+		Default: 15;
 	}
 	Parameter Combustion {
-		Text: "spalanie foodtrucka w l/km";
-		Definition: 0.12;
+		Text: "Śr. spalanie foodtrucka [l/km]";
+		Range: nonnegative;
+		Default: 0.12;
 	}
 	Parameter MaxCapacity {
-		Text: "Maksymalna ładowność foodtrucka (ilość posiłków do sprzedania)";
-		Definition: 5000;
+		Text: "Ładowność foodtrucka";
+		Range: integer;
+		Default: 5000;
+		Comment: " (ilość posiłków do sprzedania)";
 	}
 	Parameter MaxFuel {
-		Text: "Maksymalna ilość paliwa w baku foodtrucka";
-		Definition: 100;
+		Text: "Pojemność baku [l]";
+		Range: nonnegative;
+		Default: 100;
+		Comment: "Maksymalna ilość paliwa w baku foodtrucka";
 	}
 	Parameter NumberOfVehicles {
-		Text: "Liczba samochodów";
-		Definition: 3;
+		Text: "Liczba foodtrucków";
+		Range: {
+			{1..maxint}
+		}
+		Default: 3;
 	}
 	Parameter Distances {
 		IndexDomain: (i,j);
@@ -121,8 +221,12 @@ Model Main_Foodtrucks {
 	}
 	Parameter Profits {
 		IndexDomain: i;
-		Text: "zapotrzebowanie na ilość posiłków w i-tym punkcie [ilość/h]";
-		Definition: data { A : 487,  B : 937,  C : 813,  D : 565,  E : 308,  F : 758,  G : 512,  H : 769,  I : 806 };
+		Text: "Zapotrzebowanie [ilość/h]";
+		InitialData: data { A : 487,  B : 937,  C : 813,  D : 565,  E : 308,  F : 758,  G : 512,  H : 769,  I : 806 };
+		Comment: {
+			"zapotrzebowanie na ilość posiłków w i-tym punkcie [ilość/h]
+			data { A : 487,  B : 937,  C : 813,  D : 565,  E : 308,  F : 758,  G : 512,  H : 769,  I : 806 }"
+		}
 	}
 	Variable Routes {
 		IndexDomain: (i,j,k);
@@ -135,9 +239,10 @@ Model Main_Foodtrucks {
 		Comment: "Subtour elimination variable used in the Miller-Tucker-Zemlin constraints.";
 	}
 	Variable TotalCost {
-		Text: "Wartość funkcji celu";
+		Text: "Zysk [zł]";
 		Range: free;
 		Definition: sum[i, MealPrice * Profits(i) * PlaceTime * sum[(j,k), Routes(i,j,k)]] - sum[(i,j,k), Routes(i,j,k) * Distances(i,j) * FuelPrice * Combustion];
+		Comment: "Równanie dla funkcji celu";
 	}
 	Constraint IncidencesContraint {
 		IndexDomain: (i,j,k);
@@ -219,7 +324,15 @@ Model Main_Foodtrucks {
 	}
 	Procedure MainExecution {
 		Body: {
+			ShowProgressWindow;
+			
+			empty Routes, TotalCost;
+			PageRefreshAll;
+			
+			/*HighestCostPlan.CallbackNewIncumbent := 'IncumbentCallback';*/
 			solve HighestCostPlan;
+			
+			DetermineColors;
 		}
 	}
 	Procedure PreMainTermination {
