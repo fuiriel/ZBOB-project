@@ -11,14 +11,14 @@ Model Main_Foodtrucks {
 	}
 	Parameter MaxVisited {
 		Text: "Maksymaln";
-		Definition: 12 / PlaceTime;
+		Definition: 4;
 	}
 	Parameter PlaceTime {
 		Text: "Czas spędzany w jednym punkcie [h]";
 		Definition: 2;
 	}
 	Parameter Vehicles {
-		Definition: 3;
+		Definition: 1;
 	}
 	Parameter FuelPrice {
 		Text: "cena benzyny [zł/l]";
@@ -61,12 +61,11 @@ Model Main_Foodtrucks {
 		Text: "macierz incydencji";
 		Definition: {
 			data 
-			{ ( A, A ) : 1,  ( A, B ) : 1,  ( A, E ) : 1,  ( A, F ) : 1,  ( A, G ) : 1,  ( B, A ) : 1,  ( B, B ) : 1,  ( B, C ) : 1,
-			  ( B, D ) : 1,  ( B, E ) : 1,  ( B, F ) : 1,  ( B, G ) : 1,  ( C, A ) : 1,  ( C, B ) : 1,  ( C, C ) : 1,  ( C, D ) : 1,
-			  ( D, A ) : 1,  ( D, B ) : 1,  ( D, C ) : 1,  ( D, D ) : 1,  ( D, E ) : 1,  ( E, A ) : 1,  ( E, B ) : 1,  ( E, D ) : 1,
-			  ( E, E ) : 1,  ( E, F ) : 1,  ( E, G ) : 1,  ( E, H ) : 1,  ( E, I ) : 1,  ( F, A ) : 1,  ( F, B ) : 1,  ( F, E ) : 1,
-			  ( F, F ) : 1,  ( F, G ) : 1,  ( G, A ) : 1,  ( G, B ) : 1,  ( G, E ) : 1,  ( G, F ) : 1,  ( G, G ) : 1,  ( G, H ) : 1,
-			  ( G, I ) : 1,  ( H, E ) : 1,  ( H, G ) : 1,  ( H, I ) : 1,  ( I, E ) : 1,  ( I, G ) : 1,  ( I, H ) : 1,  ( I, I ) : 1 }
+			{ ( A, B ) : 1,  ( A, E ) : 1,  ( A, F ) : 1,  ( A, G ) : 1,  ( B, A ) : 1,  ( B, C ) : 1,  ( B, D ) : 1,  ( B, E ) : 1,
+			  ( B, F ) : 1,  ( B, G ) : 1,  ( C, A ) : 1,  ( C, B ) : 1,  ( C, D ) : 1,  ( D, A ) : 1,  ( D, B ) : 1,  ( D, C ) : 1,
+			  ( D, E ) : 1,  ( E, A ) : 1,  ( E, B ) : 1,  ( E, D ) : 1,  ( E, F ) : 1,  ( E, G ) : 1,  ( E, H ) : 1,  ( E, I ) : 1,
+			  ( F, A ) : 1,  ( F, B ) : 1,  ( F, E ) : 1,  ( F, G ) : 1,  ( G, A ) : 1,  ( G, B ) : 1,  ( G, E ) : 1,  ( G, F ) : 1,
+			  ( G, H ) : 1,  ( G, I ) : 1,  ( H, E ) : 1,  ( H, G ) : 1,  ( H, I ) : 1,  ( I, E ) : 1,  ( I, G ) : 1,  ( I, H ) : 1 }
 		}
 	}
 	Parameter Profits {
@@ -91,15 +90,16 @@ Model Main_Foodtrucks {
 	}
 	Constraint FuelConstraint {
 		Text: "Ograniczenie dotyczące benzyny - ilość zużytej benzyny nie może być większa niż pojemność baku";
-		Definition: 0 <= sum[(i,j), Routes(i,j) *Distances(i,j) * Combustion] <= 100 * Vehicles;
+		Definition: 0 <= sum[(i,j), Routes(i,j) * Distances(i,j) * Combustion] <= 100 * Vehicles;
 	}
 	Constraint MealConstraint {
 		Text: "Ograniczenie dotyczące pojemności foodtrucka - ilość sprzedanych danego dnia posiłków musi być mniejsze bądź równe od ilości posiłków, które może zagwarantować foodtruck";
-		Definition: 0 <= sum[i, Profits(i) * 2 * sum[j, Routes(i,j)]] <= 5000*Vehicles;
+		Definition: 0 <= sum[i, Profits(i) * PlaceTime * sum[j, Routes(i,j)]] <= 5000*Vehicles;
 	}
 	Constraint StartingPointsConstraint {
 		Text: "Ograniczenie na liczbę pojazdów i punktów, od których rozpoczynana jest trasa foodtrucka - punktów startowych nie może być więcej niż pojazdów";
 		Definition: sum[j, StartingPlaces(j)] <= Vehicles;
+		Comment: "sum[j, StartingPlaces(j)] <= Vehicles";
 	}
 	Constraint IncidencesContraint {
 		IndexDomain: (i,j);
@@ -114,7 +114,7 @@ Model Main_Foodtrucks {
 	Constraint VisitConstraint {
 		IndexDomain: j;
 		Text: "Ograniczenie na maksymalnie możliwe przemieszczenie się z punktu i do punktu j - w ciągu dnia jeden punkt może być wybrany maksymalnie jeden raz";
-		Definition: 0 <= sum[i, Routes[i,j] + StartingPlaces(j)] <= 1;
+		Definition: 0 <= sum[i, Routes[i,j]] + StartingPlaces(j) <= 1;
 	}
 	Procedure MainInitialization {
 		Comment: "Add initialization statements here that do NOT require any library being initialized already.";
