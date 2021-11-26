@@ -53,6 +53,54 @@ The library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\Aimm
 Execution error at line 2 in user-defined function section "webui::PROIsInitialized".
 The dll for external procedure "pro::management::IsInitialized" has not been found.
 A DataChangeMonitor with ID DataChangeMonitor001 does not exist.
+Warning at line 1 in user-defined function section "MainExecution".
+After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(A) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(B) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(C) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(D) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(E) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(F) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(G) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(H) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(I) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(A) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(B) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(C) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(D) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(E) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(F) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(G) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(H) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Generation error at line 1 in the definition of constraint "VehicleConstraint".
+The range of the left hand side of the "=" constraint VehicleConstraint(I) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible.  See also option row_range_violation_left_hand_side.
+Warning at line 1 in user-defined function section "MainExecution".
+After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
+Warning at line 1 in user-defined function section "MainExecution".
+After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
+Warning at line 1 in user-defined function section "MainExecution".
+After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
+AIMMS interfacing error.
+The keyword "constraints" is already declared.
+Warning at line 1 in user-defined function section "MainExecution".
+After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
 Input/output error at line 7 in user-defined function section "pro::LibraryTermination".
 The user function library C:\Users\KSzym\AppData\Local\AIMMS\PRO\\AimmsProLibrary-2.0\x64\AimmsPROClient.dll cannot be found.
 Input/output error at line 7 in user-defined function section "pro::LibraryTermination".

@@ -1,17 +1,28 @@
 ## ams_version=1.0
 
 Model Main_Foodtrucks {
+	Set C;
+	Variable S {
+		IndexDomain: i;
+		Range: free;
+		Definition: sum[j, Routes(i,j)];
+	}
+	Variable V {
+		IndexDomain: j;
+		Range: binary;
+		Definition: sum[i, Routes(i,j)];
+	}
 	MathematicalProgram HighestCostPlan {
 		Objective: TotalCost;
 		Direction: maximize;
 		Constraints: AllConstraints;
 		Variables: AllVariables;
 		Text: "funkcja celu - maksymalizacja zysków ze sprzedaży posiłków";
-		Type: Automatic;
+		Type: MIP;
 	}
 	Parameter MaxVisited {
 		Text: "Maksymaln";
-		Definition: 4;
+		Definition: 9;
 	}
 	Parameter PlaceTime {
 		Text: "Czas spędzany w jednym punkcie [h]";
@@ -90,11 +101,13 @@ Model Main_Foodtrucks {
 	}
 	Constraint FuelConstraint {
 		Text: "Ograniczenie dotyczące benzyny - ilość zużytej benzyny nie może być większa niż pojemność baku";
-		Definition: 0 <= sum[(i,j), Routes(i,j) * Distances(i,j) * Combustion] <= 100 * Vehicles;
+		Definition: 1=1;
+		Comment: "0 <= sum[(i,j), Routes(i,j) * Distances(i,j) * Combustion] <= 100 * Vehicles";
 	}
 	Constraint MealConstraint {
 		Text: "Ograniczenie dotyczące pojemności foodtrucka - ilość sprzedanych danego dnia posiłków musi być mniejsze bądź równe od ilości posiłków, które może zagwarantować foodtruck";
-		Definition: 0 <= sum[i, Profits(i) * PlaceTime * sum[j, Routes(i,j)]] <= 5000*Vehicles;
+		Definition: 1=1;
+		Comment: "0 <= sum[i, Profits(i) * PlaceTime * sum[j, Routes(i,j)]] <= 5000*Vehicles";
 	}
 	Constraint StartingPointsConstraint {
 		Text: "Ograniczenie na liczbę pojazdów i punktów, od których rozpoczynana jest trasa foodtrucka - punktów startowych nie może być więcej niż pojazdów";
@@ -107,9 +120,12 @@ Model Main_Foodtrucks {
 		Definition: 0 <= Routes(i,j) <= Incidences(i,j);
 	}
 	Constraint VehicleConstraint {
-		IndexDomain: i;
 		Text: "Ograniczenia na wykorzystanie liczby foodtracków względem możliwych do odwiedzenia punktów";
-		Definition: sum[j, Routes(i,j)] <= Vehicles * (MaxVisited - 1);
+		Definition: sum[i, S(i)] <= sum[j, V(j)] - Vehicles;
+		Comment: {
+			"sum[j, Routes(i,j)] <= Vehicles * (MaxVisited - 1)
+			sum[j, Routes(i,j)] <= sum[j, V(j)] - Vehicles"
+		}
 	}
 	Constraint VisitConstraint {
 		IndexDomain: j;
