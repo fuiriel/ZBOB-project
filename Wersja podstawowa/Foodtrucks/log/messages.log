@@ -1,43 +1,15 @@
-﻿There is 89.461 Mb in use.
+﻿There is 87.367 Mb in use.
+The scope of index "j" has not been specified.
+The parentheses '[' and ')' do not match.
 Warning: After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
 Warning at line 1 in user-defined function section "MainExecution":
 After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
-The range of the left hand side of the "=" constraint VehicleConstraint(A) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
-The range of the left hand side of the "=" constraint VehicleConstraint(B) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
-The range of the left hand side of the "=" constraint VehicleConstraint(C) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
-The range of the left hand side of the "=" constraint VehicleConstraint(D) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
-The range of the left hand side of the "=" constraint VehicleConstraint(E) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
-The range of the left hand side of the "=" constraint VehicleConstraint(F) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
-The range of the left hand side of the "=" constraint VehicleConstraint(G) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
-The range of the left hand side of the "=" constraint VehicleConstraint(H) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
-The range of the left hand side of the "=" constraint VehicleConstraint(I) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
-The range of the left hand side of the "=" constraint VehicleConstraint(A) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
-The range of the left hand side of the "=" constraint VehicleConstraint(B) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
-The range of the left hand side of the "=" constraint VehicleConstraint(C) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
-The range of the left hand side of the "=" constraint VehicleConstraint(D) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
-The range of the left hand side of the "=" constraint VehicleConstraint(E) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
-The range of the left hand side of the "=" constraint VehicleConstraint(F) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
-The range of the left hand side of the "=" constraint VehicleConstraint(G) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
-The range of the left hand side of the "=" constraint VehicleConstraint(H) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
-The range of the left hand side of the "=" constraint VehicleConstraint(I) is [0, 9], and the right hand side of that constraint is -1; this constraint is infeasible. 
-See also option row_range_violation_left_hand_side.
+The scope of index "i" has not been specified.
+The parentheses '[' and ')' do not match.
+Warning: After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
+Warning at line 1 in user-defined function section "MainExecution":
+After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
+The  expression (Integers) does not share the same root set with the identifier (C).
 Warning: After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
 Warning at line 1 in user-defined function section "MainExecution":
 After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
@@ -47,7 +19,15 @@ After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCo
 Warning: After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
 Warning at line 1 in user-defined function section "MainExecution":
 After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
-The keyword "constraints" is already declared.
+Warning: After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
+Warning at line 1 in user-defined function section "MainExecution":
+After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
+Warning: After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
+Warning at line 1 in user-defined function section "MainExecution":
+After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
+Warning: After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
+Warning at line 1 in user-defined function section "MainExecution":
+After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
 Warning: After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.
 Warning at line 1 in user-defined function section "MainExecution":
 After zero iterations CPLEX 20.1 concluded that an integer solution to HighestCostPlan does not exist.

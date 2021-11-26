@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
-<Page Version="4000" TimeStamp="2021-11-26 18:44:53">
+<Page Version="4000" TimeStamp="2021-11-26 19:38:57">
 	<Location top="30" left="30" bottom="540" right="600" />
 	<PageEditSize Type="Inherited">
 		<Size Width="600" Height="540" />
 	</PageEditSize>
 	<ProjectUUID>F5091E24-8CC9-460C-B7DE-20C84D69E25C</ProjectUUID>
-	<Title>"[Data Page] StartingPlaces"</Title>
+	<Title>"[Data Page] ConnectionConstraint"</Title>
 	<ResizeData>
 		<MainArea Line="FixedFromRight" Value="81">
 			<LeftArea Line="FixedFromTop" Value="10" />
@@ -97,21 +97,18 @@
 	<PageObject Type="Pivot Table">
 		<Location top="10" left="10" bottom="530" right="510" />
 		<TabOrder>6</TabOrder>
-		<ObjectUUID>D9C90A6B-6F44-4335-A3D6-4B351440F359</ObjectUUID>
+		<ObjectUUID>46417BAB-B02D-4833-B891-5FA9DCBF6485</ObjectUUID>
 		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
 		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
 		<Contents>
 			<Explicit_Identifier>
-				<Identifier ID="4110">StartingPlaces( j )</Identifier>
-				<Format>
-					<Show_Checkboxes ID="4315">"Yes"</Show_Checkboxes>
-				</Format>
+				<Identifier ID="4110">ConnectionConstraint( j )</Identifier>
 			</Explicit_Identifier>
 		</Contents>
 		<Indices>
 			<Suffix_Index>
 				<Explicit_Suffix>
-					<Suffix ID="6620">"Level"</Suffix>
+					<Suffix ID="6620">"basic"</Suffix>
 				</Explicit_Suffix>
 			</Suffix_Index>
 		</Indices>
@@ -152,8 +149,8 @@
 	</PageObject>
 	<UsedReferences>
 		<Model>
-			<Symbol>StartingPlaces</Symbol>
 			<Symbol>j</Symbol>
+			<Symbol>ConnectionConstraint</Symbol>
 		</Model>
 	</UsedReferences>
 </Page>

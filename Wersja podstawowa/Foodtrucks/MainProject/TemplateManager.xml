@@ -2,4 +2,5 @@
 <TemplateManager>
 	<Page Name="All Data Pages" PageGUID="7EA2CA71-912E-4817-B25E-D906B5391670" />
 	<Page Name="[Data Page] StartingPlaces" PageGUID="A6D4919B-EAE8-4B76-8A59-2159584F49FE" />
+	<Page Name="[Data Page] ConnectionConstraint" PageGUID="A865E00B-603A-4B8C-B81C-538CD828F36B" />
 </TemplateManager>

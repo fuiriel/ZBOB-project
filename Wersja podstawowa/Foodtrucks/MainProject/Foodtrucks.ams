@@ -1,7 +1,14 @@
 ## ams_version=1.0
 
 Model Main_Foodtrucks {
-	Set C;
+	Set C {
+		Definition: data {FuelConstraint, MealConstraint};
+	}
+	Constraint ConnectionConstraint {
+		IndexDomain: j;
+		Definition: StartingPlaces(j) <= sum[i, Routes(j,i)];
+		Comment: "StartingPlaces(j) = sum[i, Routes(j,i)]";
+	}
 	Variable S {
 		IndexDomain: i;
 		Range: free;
@@ -22,14 +29,20 @@ Model Main_Foodtrucks {
 	}
 	Parameter MaxVisited {
 		Text: "Maksymaln";
-		Definition: 9;
+		Definition: 4;
+	}
+	Parameter Capacity {
+		Definition: 5000;
+	}
+	Parameter Fuel {
+		Definition: 100;
 	}
 	Parameter PlaceTime {
 		Text: "Czas spędzany w jednym punkcie [h]";
 		Definition: 2;
 	}
 	Parameter Vehicles {
-		Definition: 1;
+		Definition: 2;
 	}
 	Parameter FuelPrice {
 		Text: "cena benzyny [zł/l]";
@@ -97,21 +110,19 @@ Model Main_Foodtrucks {
 	Variable TotalCost {
 		Text: "wartość funkcji celu";
 		Range: free;
-		Definition: sum[i, MealPrice * Profits(i) * 2 * sum[j, Routes(i,j)]] - sum[(i,j), Routes(i,j) * Distances(i,j) * FuelPrice * Combustion];
+		Definition: sum[i, MealPrice * Profits(i) * PlaceTime * sum[j, Routes(i,j)]] - sum[(i,j), Routes(i,j) * Distances(i,j) * FuelPrice * Combustion];
 	}
 	Constraint FuelConstraint {
 		Text: "Ograniczenie dotyczące benzyny - ilość zużytej benzyny nie może być większa niż pojemność baku";
-		Definition: 1=1;
-		Comment: "0 <= sum[(i,j), Routes(i,j) * Distances(i,j) * Combustion] <= 100 * Vehicles";
+		Definition: 0 <= sum[(i,j), Routes(i,j) * Distances(i,j) * Combustion] <= Fuel * Vehicles;
 	}
-	Constraint MealConstraint {
+	Constraint Meal {
 		Text: "Ograniczenie dotyczące pojemności foodtrucka - ilość sprzedanych danego dnia posiłków musi być mniejsze bądź równe od ilości posiłków, które może zagwarantować foodtruck";
-		Definition: 1=1;
-		Comment: "0 <= sum[i, Profits(i) * PlaceTime * sum[j, Routes(i,j)]] <= 5000*Vehicles";
+		Definition: 0 <= sum[i, Profits(i) * PlaceTime * sum[j, Routes(i,j)]] <= Capacity*Vehicles;
 	}
-	Constraint StartingPointsConstraint {
+	Constraint StartingPlacesConstraint {
 		Text: "Ograniczenie na liczbę pojazdów i punktów, od których rozpoczynana jest trasa foodtrucka - punktów startowych nie może być więcej niż pojazdów";
-		Definition: sum[j, StartingPlaces(j)] <= Vehicles;
+		Definition: 1 <= sum[j, StartingPlaces(j)] <= Vehicles;
 		Comment: "sum[j, StartingPlaces(j)] <= Vehicles";
 	}
 	Constraint IncidencesContraint {
@@ -121,7 +132,7 @@ Model Main_Foodtrucks {
 	}
 	Constraint VehicleConstraint {
 		Text: "Ograniczenia na wykorzystanie liczby foodtracków względem możliwych do odwiedzenia punktów";
-		Definition: sum[i, S(i)] <= sum[j, V(j)] - Vehicles;
+		Definition: sum[i, S(i)] = sum[j, V(j) + StartingPlaces(j)] - Vehicles;
 		Comment: {
 			"sum[j, Routes(i,j)] <= Vehicles * (MaxVisited - 1)
 			sum[j, Routes(i,j)] <= sum[j, V(j)] - Vehicles"
