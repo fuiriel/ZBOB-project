@@ -2,20 +2,23 @@
 
 Model Main_Foodtrucks {
 	MathematicalProgram HighestCostPlan {
-		Objective: TotalCost;
+		Objective: TotalPlaces;
 		Direction: maximize;
 		Constraints: AllConstraints;
 		Variables: AllVariables;
-		Type: Automatic;
+		Type: MIP;
 	}
 	Variable TotalCost {
 		Range: free;
-		Definition: sum[(i,k), MealCost*Visited(i,k)*Profits(i)*Time(i,k)];
-		Comment: "sum[(i,k), MealCost*Visited(i,k)*Profits(i)*Time(i,k)] - EmployeeCost*sum[(i,k),Time(i,k)]";
+		Definition: 1;
+		Comment: {
+			"sum[(i,k), MealCost*Visited(i,k)*Profits(i)*Time(i,k)] - EmployeeCost*sum[(i,k),Time(i,k)]
+			sum[(i,k), MealCost*Visited(i,k)*Profits(i)*Time(i,k)]"
+		}
 	}
 	Variable TotalPlaces {
 		Range: free;
-		Definition: sum[(i,k), Visited(i,k)];
+		Definition: sum[(i), Visited(i)];
 	}
 	Variable Employees {
 		IndexDomain: k;
@@ -23,7 +26,7 @@ Model Main_Foodtrucks {
 		Range: integer;
 	}
 	Variable Time {
-		IndexDomain: (i,k);
+		IndexDomain: i;
 		Range: nonnegative;
 	}
 	Variable SellingTime {
@@ -33,7 +36,7 @@ Model Main_Foodtrucks {
 		Definition: Profits(i)*Effectivity(k) / 60;
 	}
 	Variable Visited {
-		IndexDomain: (i,k);
+		IndexDomain: i;
 		Range: binary;
 	}
 	Parameter Profits {
@@ -101,11 +104,14 @@ Model Main_Foodtrucks {
 	}
 	Constraint VehicleTimeConstraint {
 		IndexDomain: k;
-		Definition: sum[i | i in VisitedPlaces(k), Time(i,k)] <= U * 60;
+		Definition: sum[i | i in VisitedPlaces(k), Time(i)] <= U * 60;
 	}
 	Constraint VisitedConstraint {
 		Definition: 1=1;
-		Comment: "sum[(i,k), Visited(i,k)] > 0";
+		Comment: {
+			"sum[(i,k), Visited(i,k)] > 0
+			Visited(i,k) = VisitedPlaces(k)"
+		}
 	}
 	Constraint EmployeeConstraint {
 		IndexDomain: k;
@@ -113,7 +119,7 @@ Model Main_Foodtrucks {
 	}
 	Constraint EffectivityTimeConstraint {
 		IndexDomain: (i,k) | i in VisitedPlaces(k);
-		Definition: Time(i,k) = Visited(i,k)*Profits(i)*Effectivity(k);
+		Definition: Time(i) = Visited(i)*Profits(i)*Effectivity(k);
 	}
 	Procedure MainInitialization {
 		Comment: "Add initialization statements here that do NOT require any library being initialized already.";
