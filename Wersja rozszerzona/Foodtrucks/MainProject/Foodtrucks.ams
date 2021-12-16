@@ -1,0 +1,170 @@
+## ams_version=1.0
+
+Model Main_Foodtrucks {
+	MathematicalProgram HighestCostPlan {
+		Objective: TotalCost;
+		Direction: maximize;
+		Constraints: AllConstraints;
+		Variables: AllVariables;
+		Type: Automatic;
+	}
+	Variable TotalCost {
+		Range: free;
+		Definition: sum[(i,k), MealCost*Visited(i,k)*Profits(i)*Time(i,k)];
+		Comment: "sum[(i,k), MealCost*Visited(i,k)*Profits(i)*Time(i,k)] - EmployeeCost*sum[(i,k),Time(i,k)]";
+	}
+	Variable TotalPlaces {
+		Range: free;
+		Definition: sum[(i,k), Visited(i,k)];
+	}
+	Variable Employees {
+		IndexDomain: k;
+		Text: "Liczba pracowników per foodtruck";
+		Range: integer;
+	}
+	Variable Time {
+		IndexDomain: (i,k);
+		Range: nonnegative;
+	}
+	Variable SellingTime {
+		IndexDomain: (i,k) | i in VisitedPlaces(k);
+		Text: "Czas na sprzedaż posiłków w danych miejsach [h]";
+		Range: free;
+		Definition: Profits(i)*Effectivity(k) / 60;
+	}
+	Variable Visited {
+		IndexDomain: (i,k);
+		Range: binary;
+	}
+	Parameter Profits {
+		IndexDomain: i;
+		Text: "Zapotrzebowanie [ilość]";
+		Definition: data { A : 487,  B : 937,  C : 813,  D : 565,  E : 308,  F : 758,  G : 512,  H : 769,  I : 806 };
+	}
+	Parameter Effectivity {
+		IndexDomain: k;
+		Definition: {
+			if Employees(k) = 0 then
+				0
+			else
+				M/Employees(k)
+			endif
+		}
+	}
+	Parameter U {
+		Text: "maksymalny czas pracy foodtrucków";
+		Definition: 12;
+	}
+	Parameter M {
+		Text: "bazowy czas (w minutach) potrzebny na wydanie jednego posiłku w przypadku obsługi przez jednego pracownika";
+		Definition: 1;
+	}
+	Parameter E {
+		Text: "maksymalna liczba pracowników sprzedających posiłki w jednym foodtrucku";
+		Definition: 2;
+	}
+	Parameter MealCost {
+		Definition: 15;
+	}
+	Parameter EmployeeCost {
+		Definition: 18;
+	}
+	Parameter NumberOfVehicles {
+		Text: "Liczba foodtrucków";
+		Range: {
+			{1..maxint}
+		}
+		Default: 3;
+	}
+	Set Vehicles {
+		SubsetOf: Integers;
+		Text: "Trasy (ciężarówki)";
+		Index: k;
+		Definition: {
+			{1 .. NumberOfVehicles}
+		}
+	}
+	Set Places {
+		Text: "Punkty sprzedaży";
+		Index: i;
+		Definition: data { A,B,C,D,E,F,G,H,I };
+	}
+	Set VisitedPlaces {
+		IndexDomain: k;
+		SubsetOf: Places;
+		Definition: {
+			data 
+			    { 1 : { A, C, D, F } ,
+			      2 : { B, E } ,
+			      3 : { G, H, I } } ;
+		}
+	}
+	Constraint VehicleTimeConstraint {
+		IndexDomain: k;
+		Definition: sum[i | i in VisitedPlaces(k), Time(i,k)] <= U * 60;
+	}
+	Constraint VisitedConstraint {
+		Definition: 1=1;
+		Comment: "sum[(i,k), Visited(i,k)] > 0";
+	}
+	Constraint EmployeeConstraint {
+		IndexDomain: k;
+		Definition: 1 <= Employees(k) <= E;
+	}
+	Constraint EffectivityTimeConstraint {
+		IndexDomain: (i,k) | i in VisitedPlaces(k);
+		Definition: Time(i,k) = Visited(i,k)*Profits(i)*Effectivity(k);
+	}
+	Procedure MainInitialization {
+		Comment: "Add initialization statements here that do NOT require any library being initialized already.";
+	}
+	Procedure PostMainInitialization {
+		Comment: {
+			"Add initialization statements here that require that the libraries are already initialized properly,
+			or add statements that require the Data Management module to be initialized."
+		}
+	}
+	Procedure MainExecution {
+		Body: {
+			solve HighestCostPlan;
+		}
+	}
+	Procedure PreMainTermination {
+		Body: {
+			return DataManagementExit();
+		}
+		Comment: {
+			"Add termination statements here that require all libraries to be still alive.
+			Return 1 if you allow the termination sequence to continue.
+			Return 0 if you want to cancel the termination sequence."
+		}
+	}
+	Procedure MainTermination {
+		Body: {
+			return 1;
+		}
+		Comment: {
+			"Add termination statements here that do not require all libraries to be still alive.
+			Return 1 to allow the termination sequence to continue.
+			Return 0 if you want to cancel the termination sequence.
+			It is recommended to only use the procedure PreMainTermination to cancel the termination sequence and let this procedure always return 1."
+		}
+	}
+	Section Quantities_and_Units {
+		Comment: {
+			"This section contains all the units and quantities that are added automatically by AIMMS.
+			It is recommended to declare all your quantities here."
+		}
+		Quantity SI_Time_Duration {
+			BaseUnit: s;
+			Conversions: minute->s : #-># * 60;
+			Comment: {
+				"Expresses the value for the duration of periods.
+				
+				The unit s has been added automatically because it is a required unit for AimmsWebUI.
+				
+				The unit minute has been added automatically because it is a required unit for AimmsWebUI."
+			}
+		}
+	}
+}
