@@ -8,54 +8,38 @@ Model Main_Foodtrucks {
 		Variables: AllVariables;
 		Type: MIP;
 	}
-	MathematicalProgram LowestCostPlan {
-		Objective: TotalWorkerCost;
-		Direction: minimize;
-		Constraints: AllConstraints;
-		Variables: AllVariables;
-		Type: MIP;
-	}
 	Variable TotalCost {
 		Range: free;
-		Definition: sum[i, MealCost*Profits(i)*PlaceTime*Visited(i)] - EmployeeCost*sum[i,Time(i)];
+		Definition: SellCost - EmployeesCost;
+		Comment: {
+			"SellCost - EmployeesCost
+			sum(i,Visited(i))"
+		}
 	}
-	Variable TotalWorkerCost {
+	Variable EmployeesCost {
 		Range: free;
 		Definition: EmployeeCost*sum[i,Time(i)];
+		Comment: {
+			"EmployeeCost * sum[k, VEmployees(k)* sum[i | i in VisitedPlaces(k), Time(i)]]
+			EmployeeCost*sum[i,Time(i)]"
+		}
 	}
-	Variable TotalPlaces {
+	Variable SellCost {
 		Range: free;
-		Definition: sum[(i), Visited(i)];
+		Definition: sum[i, MealCost*Profits(i)*PlaceTime*Visited(i)];
 	}
-	Variable Employees {
+	Variable VEmployees {
 		IndexDomain: k;
-		Text: "Liczba pracowników per foodtruck";
+		Text: "Liczba pracowników foodtrucka k";
 		Range: integer;
 	}
 	Variable Time {
 		IndexDomain: i;
 		Range: nonnegative;
 	}
-	Variable NeedTime {
-		IndexDomain: (i,k) | i in VisitedPlaces(k);
-		Text: "Czas na sprzedaż posiłków w danych miejsach [h]";
-		Range: free;
-		Definition: Profits(i)*Effectivity(k);
-	}
 	Variable Visited {
 		IndexDomain: i;
 		Range: binary;
-	}
-	Variable UsedProfit {
-		IndexDomain: (i,k) | i in VisitedPlaces(k);
-		Range: free;
-		Definition: 1;
-		Comment: "Time(i) / Effectivity(k) / T";
-	}
-	Variable VehiclesTime {
-		IndexDomain: k;
-		Range: free;
-		Definition: sum[i | i in VisitedPlaces(k), Time(i)];
 	}
 	Parameter Profits {
 		IndexDomain: i;
@@ -64,18 +48,15 @@ Model Main_Foodtrucks {
 	}
 	Parameter Effectivity {
 		IndexDomain: k;
-		Definition: {
-			if Employees(k) = 0 then
-				0
-			else
-				MealTime/ Employees(k)
-			endif
-		}
-		Comment: "M/Employees(k)";
+		Definition: EffectivityF(VEmployees(k));
+	}
+	Parameter EffectivityF {
+		IndexDomain: p;
+		Definition: MealTime/(-.01+p);
 	}
 	Parameter VehicleTime {
 		Text: "maksymalny czas pracy foodtrucków";
-		Definition: 24;
+		Definition: 4;
 	}
 	Parameter MealTime {
 		Text: "bazowy czas (w minutach) potrzebny na wydanie jednego posiłku w przypadku obsługi przez jednego pracownika";
@@ -101,12 +82,28 @@ Model Main_Foodtrucks {
 		}
 		Default: 3;
 	}
+	Parameter NeedSellVTime {
+		IndexDomain: (k,p);
+		Definition: sum[i| i in VisitedPlaces(k), Profits(i)*PlaceTime*EffectivityF(p)/60];
+	}
+	Parameter NeedSellPTime {
+		IndexDomain: (i,p);
+		Definition: Profits(i)*PlaceTime*EffectivityF(p)/60;
+	}
 	Set Vehicles {
 		SubsetOf: Integers;
 		Text: "Trasy (ciężarówki)";
 		Index: k;
 		Definition: {
 			{1 .. NumberOfVehicles}
+		}
+	}
+	Set Employees {
+		SubsetOf: Integers;
+		Text: "Dostępni pracownicy";
+		Index: p;
+		Definition: {
+			{0..NoOfEmployees}
 		}
 	}
 	Set Places {
@@ -119,22 +116,31 @@ Model Main_Foodtrucks {
 		SubsetOf: Places;
 		Definition: {
 			data 
-			    { 1 : { A, C, D, F } ,
-			      2 : { B, E } ,
+			    { 1 : { C, D } ,
+			      2 : { A, B, E, F } ,
 			      3 : { G, H, I } } ;
 		}
 	}
 	Constraint VehicleTimeConstraint {
 		IndexDomain: k;
 		Definition: sum[i | i in VisitedPlaces(k), Time(i)] <= VehicleTime;
+		Comment: "sum[i | i in VisitedPlaces(k), Time(i)] <= VehicleTime";
 	}
 	Constraint EmployeeConstraint {
 		IndexDomain: k;
-		Definition: 1 <= Employees(k) <= NoOfEmployees;
+		Definition: 1 <= VEmployees(k) <= NoOfEmployees;
 	}
 	Constraint EffectivityTimeConstraint {
 		IndexDomain: (i,k) | i in VisitedPlaces(k);
 		Definition: Time(i) = Visited(i)*Profits(i)*PlaceTime*Effectivity(k)/60;
+		Comment: {
+			"Time(i) = Visited(i)*Profits(i)*PlaceTime*Effectivity(k)/60
+			Time(i) >= Visited(i)*Profits(i)*PlaceTime*MealTime/60 - Effectivity(k)/60"
+		}
+	}
+	Constraint PlaceTimeConstraint {
+		IndexDomain: i;
+		Definition: Time(i) <= PlaceTime;
 	}
 	Procedure MainInitialization {
 		Comment: "Add initialization statements here that do NOT require any library being initialized already.";
