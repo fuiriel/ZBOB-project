@@ -1,0 +1,211 @@
+## ams_version=1.0
+
+Model Main_Foodtrucks {
+	MathematicalProgram HighestCostPlan {
+		Objective: TotalCost;
+		Direction: maximize;
+		Constraints: AllConstraints;
+		Variables: AllVariables;
+		Type: MIP;
+	}
+	Variable TotalCost {
+		Range: free;
+		Definition: SellCost - EmployeesCost - WorkCost;
+		Comment: {
+			"SellCost - EmployeesCost
+			sum(i,Visited(i))"
+		}
+	}
+	Variable EmployeesCost {
+		Range: free;
+		Definition: EmployeeCost*sum[k, VEmployees(k)];
+		Comment: {
+			"EmployeeCost * sum[k, VEmployees(k)* sum[i | i in VisitedPlaces(k), Time(i)]]
+			EmployeeCost*sum[i,Time(i)]"
+		}
+	}
+	Variable WorkCost {
+		Range: free;
+		Definition: MealSellCost*sum[i,Time(i)];
+	}
+	Variable SellCost {
+		Range: free;
+		Definition: sum[i, MealCost*Profits(i)*PlaceTime*Visited(i)];
+	}
+	Variable VEmployees {
+		IndexDomain: k;
+		Text: "Liczba pracowników foodtrucka k";
+		Range: integer;
+	}
+	Variable Time {
+		IndexDomain: i;
+		Range: nonnegative;
+	}
+	Variable Visited {
+		IndexDomain: i;
+		Range: binary;
+	}
+	Variable VehicleTimes {
+		IndexDomain: k;
+		Range: free;
+		Definition: sum[i | i in VisitedPlaces(k), Time(i)];
+	}
+	Parameter Profits {
+		IndexDomain: i;
+		Text: "Zapotrzebowanie [ilość]";
+		Definition: data { A : 487,  B : 937,  C : 813,  D : 565,  E : 308,  F : 758,  G : 512,  H : 769,  I : 806 };
+	}
+	Parameter VehicleTime {
+		Text: "maksymalny czas pracy foodtrucków";
+		Definition: 8;
+	}
+	Parameter MealTime {
+		Text: "bazowy czas (w minutach) potrzebny na wydanie jednego posiłku w przypadku obsługi przez jednego pracownika";
+		Definition: .5;
+	}
+	Parameter PlaceTime {
+		Definition: 2;
+	}
+	Parameter NoOfEmployees {
+		Text: "maksymalna liczba pracowników sprzedających posiłki w jednym foodtrucku";
+		Definition: 8;
+	}
+	Parameter MealCost {
+		Definition: 15;
+	}
+	Parameter EmployeeCost {
+		Definition: 100;
+	}
+	Parameter MealSellCost {
+		Definition: 18;
+	}
+	Parameter NumberOfVehicles {
+		Text: "Liczba foodtrucków";
+		Range: {
+			{1..maxint}
+		}
+		Default: 3;
+	}
+	Parameter NeedSellPTime {
+		IndexDomain: (i,p);
+		Definition: (Profits(i)*PlaceTime*MealTime - p*MealTime*KEffectivityTime)/60;
+	}
+	Parameter AvgProfit {
+		Definition: sum(i,Profits(i))/9;
+	}
+	Parameter KEffectivityTime {
+		Text: "ile jeden pracownik może średnio sprzedać posików w punktach sprzedaży";
+		Definition: AvgProfit*PlaceTime/NoOfEmployees;
+	}
+	Set Vehicles {
+		SubsetOf: Integers;
+		Text: "Trasy (ciężarówki)";
+		Index: k;
+		Definition: {
+			{1 .. NumberOfVehicles}
+		}
+	}
+	Set Employees {
+		SubsetOf: Integers;
+		Text: "Dostępni pracownicy";
+		Index: p;
+		Definition: {
+			{0..NoOfEmployees}
+		}
+	}
+	Set Places {
+		Text: "Punkty sprzedaży";
+		Index: i;
+		Definition: data { A,B,C,D,E,F,G,H,I };
+	}
+	Set VisitedPlaces {
+		IndexDomain: k;
+		SubsetOf: Places;
+		Definition: {
+			data 
+			    { 1 : { C, D } ,
+			      2 : { A, B, E, F } ,
+			      3 : { G, H, I } } ;
+		}
+	}
+	Constraint VehicleTimeConstraint {
+		IndexDomain: k;
+		Definition: VehicleTimes(k) <= VehicleTime;
+		Comment: "sum[i | i in VisitedPlaces(k), Time(i)] <= VehicleTime";
+	}
+	Constraint EmployeeConstraint {
+		IndexDomain: k;
+		Definition: VEmployees(k) <= NoOfEmployees;
+		Comment: "1 <= VEmployees(k) <= NoOfEmployees";
+	}
+	Constraint EffectivityTimeConstraint {
+		IndexDomain: (i,k) | i in VisitedPlaces(k);
+		Definition: Time(i) >= (Visited(i)*Profits(i)*PlaceTime*MealTime - VEmployees(k)*MealTime*KEffectivityTime)/60;
+		Comment: {
+			"Time(i) = Visited(i)*Profits(i)*PlaceTime*Effectivity(k)/60
+			Time(i) >= Visited(i)*Profits(i)*PlaceTime*MealTime/60 - Effectivity(k)/60"
+		}
+	}
+	Constraint PlaceTimeConstraint {
+		IndexDomain: i;
+		Definition: 1=1;
+		Comment: "Time(i) <= PlaceTime";
+	}
+	Constraint WorkTimeConstraint {
+		IndexDomain: (i,k) | i in VisitedPlaces(k);
+		Definition: Profits(i)*PlaceTime*MealTime - VEmployees(k)*MealTime*KEffectivityTime >= 0;
+		Comment: "Profits(i)*PlaceTime*MealTime - VEmployees(k)*MealTime*MinProfit >= 0";
+	}
+	Procedure MainInitialization {
+		Comment: "Add initialization statements here that do NOT require any library being initialized already.";
+	}
+	Procedure PostMainInitialization {
+		Comment: {
+			"Add initialization statements here that require that the libraries are already initialized properly,
+			or add statements that require the Data Management module to be initialized."
+		}
+	}
+	Procedure MainExecution {
+		Body: {
+			solve HighestCostPlan;
+		}
+	}
+	Procedure PreMainTermination {
+		Body: {
+			return DataManagementExit();
+		}
+		Comment: {
+			"Add termination statements here that require all libraries to be still alive.
+			Return 1 if you allow the termination sequence to continue.
+			Return 0 if you want to cancel the termination sequence."
+		}
+	}
+	Procedure MainTermination {
+		Body: {
+			return 1;
+		}
+		Comment: {
+			"Add termination statements here that do not require all libraries to be still alive.
+			Return 1 to allow the termination sequence to continue.
+			Return 0 if you want to cancel the termination sequence.
+			It is recommended to only use the procedure PreMainTermination to cancel the termination sequence and let this procedure always return 1."
+		}
+	}
+	Section Quantities_and_Units {
+		Comment: {
+			"This section contains all the units and quantities that are added automatically by AIMMS.
+			It is recommended to declare all your quantities here."
+		}
+		Quantity SI_Time_Duration {
+			BaseUnit: s;
+			Conversions: minute->s : #-># * 60;
+			Comment: {
+				"Expresses the value for the duration of periods.
+				
+				The unit s has been added automatically because it is a required unit for AimmsWebUI.
+				
+				The unit minute has been added automatically because it is a required unit for AimmsWebUI."
+			}
+		}
+	}
+}
