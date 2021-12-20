@@ -10,7 +10,7 @@ Model Main_Foodtrucks {
 	}
 	Variable TotalCost {
 		Range: free;
-		Definition: sum(i,Visited(i));
+		Definition: SellCost - EmployeesCost;
 		Comment: {
 			"SellCost - EmployeesCost
 			sum(i,Visited(i))"
@@ -18,7 +18,7 @@ Model Main_Foodtrucks {
 	}
 	Variable EmployeesCost {
 		Range: free;
-		Definition: EmployeeCost*sum[i,Time(i)];
+		Definition: EmployeeCost*sum[k, VEmployees(k)] + MealSellCost*sum[i,Time(i)];
 		Comment: {
 			"EmployeeCost * sum[k, VEmployees(k)* sum[i | i in VisitedPlaces(k), Time(i)]]
 			EmployeeCost*sum[i,Time(i)]"
@@ -50,10 +50,6 @@ Model Main_Foodtrucks {
 		IndexDomain: p;
 		Definition: MealTime/(-.01+p);
 	}
-	Parameter EffectivityF2 {
-		IndexDomain: p;
-		Definition: p*MealTime*AvgProfit;
-	}
 	Parameter VehicleTime {
 		Text: "maksymalny czas pracy foodtrucków";
 		Definition: 8;
@@ -67,12 +63,15 @@ Model Main_Foodtrucks {
 	}
 	Parameter NoOfEmployees {
 		Text: "maksymalna liczba pracowników sprzedających posiłki w jednym foodtrucku";
-		Definition: 12;
+		Definition: 60;
 	}
 	Parameter MealCost {
 		Definition: 15;
 	}
 	Parameter EmployeeCost {
+		Definition: 100;
+	}
+	Parameter MealSellCost {
 		Definition: 18;
 	}
 	Parameter NumberOfVehicles {
@@ -92,7 +91,7 @@ Model Main_Foodtrucks {
 	}
 	Parameter NeedSellPTime2 {
 		IndexDomain: (i,p);
-		Definition: (Profits(i)*PlaceTime*MealTime - p*MealTime*KProfit)/60;
+		Definition: (Profits(i)*PlaceTime*MealTime - p*MealTime*KEffTime)/60;
 	}
 	Parameter AvgProfit {
 		Definition: sum(i,Profits(i))/9;
@@ -101,7 +100,11 @@ Model Main_Foodtrucks {
 		Definition: 308;
 	}
 	Parameter KProfit {
-		Definition: MinProfit/NoOfEmployees;
+		Text: "ile jeden pracownik może średnio sprzedać posików w punktach sprzedaży";
+		Definition: AvgProfit*PlaceTime/NoOfEmployees;
+	}
+	Parameter KEffTime {
+		Definition: KProfit;
 	}
 	Set Vehicles {
 		SubsetOf: Integers;
@@ -146,7 +149,7 @@ Model Main_Foodtrucks {
 	}
 	Constraint EffectivityTimeConstraint {
 		IndexDomain: (i,k) | i in VisitedPlaces(k);
-		Definition: Time(i) >= (Visited(i)*Profits(i)*PlaceTime*MealTime - VEmployees(k)*MealTime*KProfit)/60;
+		Definition: Time(i) >= (Visited(i)*Profits(i)*PlaceTime*MealTime - VEmployees(k)*MealTime*KEffTime)/60;
 		Comment: {
 			"Time(i) = Visited(i)*Profits(i)*PlaceTime*Effectivity(k)/60
 			Time(i) >= Visited(i)*Profits(i)*PlaceTime*MealTime/60 - Effectivity(k)/60"
@@ -159,7 +162,7 @@ Model Main_Foodtrucks {
 	}
 	Constraint WorkTimeConstraint {
 		IndexDomain: (i,k) | i in VisitedPlaces(k);
-		Definition: 1=1;
+		Definition: Profits(i)*PlaceTime*MealTime - VEmployees(k)*MealTime*KEffTime >= 0;
 		Comment: "Profits(i)*PlaceTime*MealTime - VEmployees(k)*MealTime*MinProfit >= 0";
 	}
 	Procedure MainInitialization {
