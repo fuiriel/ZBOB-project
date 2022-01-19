@@ -61,39 +61,39 @@ Model Main_Foodtrucks {
 	Parameter Profits {
 		IndexDomain: i;
 		Text: "Zapotrzebowanie w punkcie [ilość/h]";
-		Definition: data { A : 487,  B : 937,  C : 813,  D : 565,  E : 308,  F : 758,  G : 512,  H : 769,  I : 806 };
+		InitialData: data { A : 487,  B : 937,  C : 813,  D : 565,  E : 308,  F : 758,  G : 512,  H : 769,  I : 806 };
 	}
 	Parameter VehicleTime {
 		Text: "Maksymalny czas pracy jednego foodtrucka [h]";
-		Definition: 8;
+		InitialData: 8;
 	}
 	Parameter MealTime {
 		Text: "Bazowy czas (w minutach) potrzebny na wydanie jednego posiłku w przypadku obsługi przez jednego pracownika";
-		Definition: .5;
+		InitialData: .5;
 	}
 	Parameter PlaceTime {
 		Text: "Czas postoju w punkcie [h]";
-		Definition: 2;
+		InitialData: 2;
 	}
 	Parameter NoOfEmployees {
 		Text: "Maksymalna liczba pracowników sprzedających posiłki w jednym foodtrucku";
 		Range: integer;
-		Definition: 8;
+		InitialData: 8;
 	}
 	Parameter MealCost {
 		Text: "Koszt sprzedawanego posiłku [zł]";
 		Range: nonnegative;
-		Definition: 15;
+		InitialData: 15;
 	}
 	Parameter EmployeeCost {
 		Text: "Koszt zatrudnienia pracownika [zł]";
 		Range: nonnegative;
-		Definition: 100;
+		InitialData: 100;
 	}
 	Parameter MealSellCost {
 		Text: "Koszt sprzedaży (czasu pracy foodtrucka) [zł/h]";
 		Range: nonnegative;
-		Definition: 18;
+		InitialData: 18;
 	}
 	Parameter NumberOfVehicles {
 		Text: "Liczba foodtrucków";
@@ -142,9 +142,9 @@ Model Main_Foodtrucks {
 		Text: "Odwiedzone punkty przez foodtrucki";
 		Definition: {
 			data 
-			    { 1 : { C, D } ,
-			      2 : { A, B, E, F } ,
-			      3 : { G, H, I } } ;
+			    { 1 : { C } ,
+			      2 : { B, G, H, I } ,
+			      3 : { A ,E, F, D } } ;
 		}
 	}
 	Constraint VehicleTimeConstraint {
