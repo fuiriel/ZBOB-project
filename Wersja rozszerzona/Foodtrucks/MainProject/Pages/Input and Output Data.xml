@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2021-12-20 19:33:26">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>F2268A12-9ABF-4D1D-8E15-66B3C4C45423</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background RGB="#f7fbc8" />
+	<PageObject Type="Rectangle">
+		<Location top="120" left="66" bottom="630" right="948" />
+		<Shape>Open</Shape>
+		<FillColor RGB="#efefef" />
+		<LineColor RGB="#000000" />
+		<LineWidth>5</LineWidth>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="138" left="402" bottom="174" right="648" />
+		<StaticText>Input</StaticText>
+		<Alignment>Center</Alignment>
+		<Font GUID="944651F2-F035-4D34-8410-A871DD338E8B" Name="ArialNarrow14b" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="126" left="1116" bottom="168" right="1260" />
+		<StaticText>Output</StaticText>
+		<Alignment>Center</Alignment>
+		<Font GUID="944651F2-F035-4D34-8410-A871DD338E8B" Name="ArialNarrow14b" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Rectangle">
+		<Location top="114" left="990" bottom="240" right="1374" />
+		<Shape>Open</Shape>
+		<FillColor RGB="#ffffff" />
+		<LineColor RGB="#000000" />
+		<LineWidth>5</LineWidth>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="174" left="1008" bottom="222" right="1362" />
+		<TabOrder>1</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>TotalCost</Identifier>
+			<NumberFormat Width="30" Decimals="3" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+			<Title>"Zysk"</Title>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="570" left="414" bottom="618" right="582" />
+		<TabOrder>2</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Run"</Title>
+		<BackgroundColor RGB="#ffff00" />
+		<ForegroundColor RGB="#008000" />
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<ActionSequence>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>MainExecution</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Table">
+		<Location top="198" left="84" bottom="558" right="198" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<RowIndentation>3</RowIndentation>
+		<ExplicitIdentifier>
+			<Identifier>Profits( i )</Identifier>
+			<FirstColumn>1</FirstColumn>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="198" left="216" bottom="234" right="882" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>NoOfEmployees</Identifier>
+			<NumberFormat Width="3" Decimals="0" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+			<Title>"Maksymalna liczba pracowników w jednym foodtrucku"</Title>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="306" left="216" bottom="342" right="882" />
+		<TabOrder>11</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>VehicleTime</Identifier>
+			<NumberFormat Width="5" Decimals="2" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="252" left="216" bottom="294" right="882" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>MealCost</Identifier>
+			<NumberFormat Width="5" Decimals="1" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="360" left="216" bottom="396" right="882" />
+		<TabOrder>6</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>MealTime</Identifier>
+			<NumberFormat Width="5" Decimals="2" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+			<Title>"Czas potrzebny na wydanie jednego posiłku przez jednego pracownika"</Title>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="414" left="216" bottom="450" right="882" />
+		<TabOrder>7</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>MealSellCost</Identifier>
+			<NumberFormat Width="5" Decimals="1" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="468" left="216" bottom="504" right="882" />
+		<TabOrder>8</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>EmployeeCost</Identifier>
+			<NumberFormat Width="4" Decimals="0" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="522" left="216" bottom="558" right="882" />
+		<TabOrder>9</TabOrder>
+		<Font GUID="2A210F3A-8F95-4798-A888-9936B8D34599" Name="Arial12b" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>PlaceTime</Identifier>
+			<NumberFormat Width="5" Decimals="2" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>TotalCost</Symbol>
+			<Symbol>Profits</Symbol>
+			<Symbol>VehicleTime</Symbol>
+			<Symbol>MealTime</Symbol>
+			<Symbol>PlaceTime</Symbol>
+			<Symbol>NoOfEmployees</Symbol>
+			<Symbol>MealCost</Symbol>
+			<Symbol>EmployeeCost</Symbol>
+			<Symbol>MealSellCost</Symbol>
+			<Symbol>MainExecution</Symbol>
+			<Symbol>i</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>
